@@ -1,0 +1,5 @@
+I"<p>上周我发的周报里提到了2019 BotConf里一篇关于Android Application Deobfuscation相关的议题《DeStroid – Fighting String Encryption in Android Malware》，阳仔给我推荐了今年的POC另一个相关的议题《Breaking Android Obfuscation By Applying BAOBAB》，这个议题显然是比前者好的，知其然，也要知其所以然，才能从一个突破点，去尝试突破整个防御面</p>
+<ul>
+  <li>https://github.com/theori-io/POC2019-BAOBAB/blob/master/slides/baobab_final.pdf</li>
+</ul>
+:ET
