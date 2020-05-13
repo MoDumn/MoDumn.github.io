@@ -108,7 +108,7 @@ https://www.zetetic.net/sqlcipher/
 
 各种搞定文件的结构应该是这样的
 
-![1.png](/assets/resources/79F580208332E1F1C851EBAC489D2C93.png =1920x1050)
+![1.png](/assets/resources/79F580208332E1F1C851EBAC489D2C93.png)
 
 然后写代码
 ```
@@ -183,7 +183,7 @@ C:\Users\wangz>adb pull /sdcard/decryptedtest.db C:\Users\wangz\Desktop
 
 使用sqlcipher.exe可视化工具打开
 
-![2.png](/assets/resources/5766B59C41B50912CE915C1EF9169BF5.png =1014x627)
+![2.png](/assets/resources/5766B59C41B50912CE915C1EF9169BF5.png)
 
 再结合要求，Flag：RCTF{backuuuuuP}
 

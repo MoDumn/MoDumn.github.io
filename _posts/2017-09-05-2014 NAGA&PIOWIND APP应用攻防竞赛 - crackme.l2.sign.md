@@ -7,7 +7,7 @@ categories: Android CrackMe CTF
 
 Java层加了不知道是什么的花指令
 
-![1.png](/assets/resources/BCB886053837B79B24414D5BA903FE9A.png =1920x1050)
+![1.png](/assets/resources/BCB886053837B79B24414D5BA903FE9A.png)
 
 其实认真看一下大概还是能看出来的，我闲着无聊给处理了一下
 ```
@@ -173,7 +173,7 @@ public class MainActivity extends Activity {
 
 和第一题大概是一样的，再看so文件，同样加密了，使用第一题的方法动态调试
 
-![2.png](/assets/resources/11ABC6564768786413B34E4C6A83094A.png =1141x716)
+![2.png](/assets/resources/11ABC6564768786413B34E4C6A83094A.png)
 
 撸回本地
 ```
@@ -185,33 +185,33 @@ for(dex_addr = 0xA350E000; dex_addr < 0xA355B000; dex_addr++)
 
 但是我们使用IDA打开的时候，发现出错，使用010editor分析，发现文件头没了
 
-![3.png](/assets/resources/F03289BB06EFE7C80CDEA1F15DDA38E4.png =663x359)
+![3.png](/assets/resources/F03289BB06EFE7C80CDEA1F15DDA38E4.png)
 
 我们找个正常的so文件的文件头拷贝回去，然后再使用IDA打开，发现可以打开了
 
-![4.png](/assets/resources/77E31D24DC3112EDAFD57FA7BD5A328D.png =1920x1051)
+![4.png](/assets/resources/77E31D24DC3112EDAFD57FA7BD5A328D.png)
 
 我们继续分析，整个程序的结构和第一题是一样的
 
-![5.png](/assets/resources/D8AA6E13486FFD5A6EB0D608024AEBB1.png =1920x1050)
+![5.png](/assets/resources/D8AA6E13486FFD5A6EB0D608024AEBB1.png)
 
 新建内存空间
 
-![6.png](/assets/resources/A0AF8001ACEDE1E989C48943B79A3E98.png =1009x632)
+![6.png](/assets/resources/A0AF8001ACEDE1E989C48943B79A3E98.png)
 
 Base64解码
 
-![7.png](/assets/resources/35A24BDE8E99B1D38C7F04FE474EA370.png =1413x749)
+![7.png](/assets/resources/35A24BDE8E99B1D38C7F04FE474EA370.png)
 
 但是我们在最后校验的地方发现了不一样的地方，它校验的方式是反过来的
 
-![8.png](/assets/resources/01C5B5B15959A43CEA08B30D6C245773.png =1543x839)
+![8.png](/assets/resources/01C5B5B15959A43CEA08B30D6C245773.png)
 
 突然界面就酷炫了起来
 
 那么就比较简单了，注册码就是用户名倒序的Base64编码再插入`-`
 
-![9.png](/assets/resources/289FCBD69F333B604F8A047F73DDF77F.png =1166x871)
+![9.png](/assets/resources/289FCBD69F333B604F8A047F73DDF77F.png)
 
 注册算法
 ```
