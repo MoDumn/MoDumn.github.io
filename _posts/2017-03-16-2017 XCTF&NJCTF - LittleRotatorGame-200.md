@@ -17,7 +17,7 @@ categories: Android CrackMe CTF
 
 看不下去了，于是决定先看so，IDA打开so
 
-![1.png](resources/D3518F55CC05C88D98FFE0D6F32E83F1.png =1920x1049)
+![1.png](/assets/resources/D3518F55CC05C88D98FFE0D6F32E83F1.png)
 
 我去！！！！！！
 
@@ -31,27 +31,27 @@ categories: Android CrackMe CTF
 
 首先通过传感器获取`(x, y, z)`三个值，之后传入`a_process()`
 
-![2.png](resources/D21970D567385699FA24586A31F922C8.png =1527x776)
+![2.png](/assets/resources/D21970D567385699FA24586A31F922C8.png)
 
 当然，`a_process()`函数也是使用O-LLVM混淆了
 
-![3.png](resources/EB37C882150FD785FDE938FC4F5B9187.png =1919x1051)
+![3.png](/assets/resources/EB37C882150FD785FDE938FC4F5B9187.png)
 
 调用`a_process()`后会有一个判断
 
-![4.png](resources/857462AEB0A00E22CAB7930A751EE54D.png =586x89)
+![4.png](/assets/resources/857462AEB0A00E22CAB7930A751EE54D.png)
 
 如果`a_process()`的返回值不是6，直接和数组对比
 
-![5.png](resources/E2D3A10E323E1164FD956A95B384F2DE.png =1095x310)
+![5.png](/assets/resources/E2D3A10E323E1164FD956A95B384F2DE.png)
 
 如果返回值为6，则调用`b_process()`，并将两个返回值相加再跟数组对比
 
-![6.png](resources/556127679658742606A73C4954F771A9.png =1113x242)
+![6.png](/assets/resources/556127679658742606A73C4954F771A9.png)
 
 `b_process()`函数同样使用了O-LLVM混淆
 
-![7.png](resources/5F5B5BCA1E704E49470E9E84CCDDCEC9.png =1920x1050)
+![7.png](/assets/resources/5F5B5BCA1E704E49470E9E84CCDDCEC9.png)
 
 对比的数组
 ```
@@ -72,19 +72,19 @@ categories: Android CrackMe CTF
 
 断点下好后，一直F9，当R0的值保持为2不变，即可进行十次对比
 
-![8.png](resources/BA03E37D2F27E8CE4CC9FCD0E3AB4E97.png =1920x1049)
+![8.png](/assets/resources/BA03E37D2F27E8CE4CC9FCD0E3AB4E97.png)
 
 数组第二个数字是7，所以需要将R0修改为6
 
-![9.png](resources/0AA9881DEBF05FA6AC40164A3480C6CF.png =1920x1048)
+![9.png](/assets/resources/0AA9881DEBF05FA6AC40164A3480C6CF.png)
 
 此时会在`b_process()`断下，将返回值修改为1，如果已经为1则不需要修改
 
-![10.png](resources/250FE842FAF1C9CB3424927C88BDF68E.png =1920x1051)
+![10.png](/assets/resources/250FE842FAF1C9CB3424927C88BDF68E.png)
 
 按照这种方法对比完数组的十个数据，在Android Device Monitor输出Flag
 
-![11.png](resources/7C1814CB95F60485B393C0E797DF5498.png =1150x291)
+![11.png](/assets/resources/7C1814CB95F60485B393C0E797DF5498.png)
 
 动态调试的过程并不是很难，唯一需要注意的是，注意手机要立着:)
 

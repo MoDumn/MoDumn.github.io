@@ -7,7 +7,7 @@ categories: Android CrackMe CTF
 
 Java层比较简单
 
-![1.png](resources/729F23F05581B500ECBA2FF1F882D514.png =838x451)
+![1.png](/assets/resources/729F23F05581B500ECBA2FF1F882D514.png)
 
 查看so，发现加密，依旧dump，IDA调试时未发现有反调试，不过有那么一瞬间看到了`inotify`，没具体看
 ```
@@ -19,49 +19,49 @@ for(dex_addr = 0xA357D000; dex_addr < 0xA35DE000; dex_addr++)
 
 修复dump后的so文件头，使用IDA打开，关键的依旧是这个函数
 
-![2.png](resources/F11E1E8409E1E2B5E2D39F2A08CCF319.png =1143x718)
+![2.png](/assets/resources/F11E1E8409E1E2B5E2D39F2A08CCF319.png)
 
 但是我们跟入后，发现壳好像没有脱干净（后来发现其实不是没脱干净）
 
-![3.png](resources/9B59DB5BBEC0C80300968F7E6C5598F2.png =965x470)
+![3.png](/assets/resources/9B59DB5BBEC0C80300968F7E6C5598F2.png)
 
 再次动态调试脱壳，这次我们找到校验函数，单步跟下去看看具体是什么情况
 
 我们需要先找到校验函数的地址，使用给`dvmUseJNIBridge`函数下断点的方法
 
-![4.png](resources/AE96DAA7C380FAFFD47956B551A672CB.png =1175x340)
+![4.png](/assets/resources/AE96DAA7C380FAFFD47956B551A672CB.png)
 
 我们使用调试模式启动应用，IDA挂上去，找到`libdvm.so`的`dvmUseJNIBridge`函数，下断点
 
 然后把IDA跑起来，在应用界面输入账号密码，点击登录，就可以发现断在这里了，我们注意观察参数，第二个参数就是我们的`crackme`函数
 
-![5.png](resources/C6BF6C879306ADADAF77C2B1A2D99F75.png =1920x1050)
+![5.png](/assets/resources/C6BF6C879306ADADAF77C2B1A2D99F75.png)
 
 跟过去，可以看到确实是校验函数
 
-![6.png](resources/E088048C6478510C7DBDA7556973196E.png =1920x1051)
+![6.png](/assets/resources/E088048C6478510C7DBDA7556973196E.png)
 
 找到我们看到是跳转地址的地方
 
-![7.png](resources/BA2BC211D65FE53F559B390A8F4AB32A.png =1288x619)
+![7.png](/assets/resources/BA2BC211D65FE53F559B390A8F4AB32A.png)
 
 双击过去
 
-![8.png](resources/E5AB4F7BB8FF0252528356596200CC3A.png =900x303)
+![8.png](/assets/resources/E5AB4F7BB8FF0252528356596200CC3A.png)
 
 再次双击过去，发现是关键加解密点了，此时我们记录一下这个地址
 
-![9.png](resources/3FA0182980B36B78B72DF09754CB85E1.png =880x374)
+![9.png](/assets/resources/3FA0182980B36B78B72DF09754CB85E1.png)
 
 再次dump这个so文件
 
 动静结合，接下来看能力了
 
-![10.png](resources/0EC7B8CD2BB1CE8F2A910F4BF0268E81.png =1920x1049)
+![10.png](/assets/resources/0EC7B8CD2BB1CE8F2A910F4BF0268E81.png)
 
 入口的数据初始化，然后调用`_Unwind_GetCFAB`，这和前几题是类似的
 
-![11.png](resources/E7164308A313E2F607131E81260C065A.png =1050x697)
+![11.png](/assets/resources/E7164308A313E2F607131E81260C065A.png)
 
 跟入，开始做了一些参数的存储操作，然后存储了`_Unwind_GetCFAB`函数的指针到栈中
 ```
@@ -82,7 +82,7 @@ LOAD:0002DB58 STR             R3, [R11,#var_14] ; var_14为_Unwind_GetCFAB函数
 
 一开始并没有看出来，所以使用了动态调试来确定
 
-![12.png](resources/125343C2DA359FAAFF16938734BC20EC.png =941x572)
+![12.png](/assets/resources/125343C2DA359FAAFF16938734BC20EC.png)
 
 接下来的操作是为了调用`tdog_decrypt`而做参数的计算
 ```
@@ -208,7 +208,7 @@ LOAD:00038E04 BNE             loc_38E28
 
 这里是在计算一个四字节的数据
 
-![13.png](resources/5BE7D64D585CA33537ACA67889C11459.png =1588x844)
+![13.png](/assets/resources/5BE7D64D585CA33537ACA67889C11459.png)
 
 我们在内存中跟随，可以看到这四个字节的数据已经修改成了`83 93 00 23`，不清楚的同学可以在异或的地方下个断点循环调试看看
 
@@ -350,11 +350,11 @@ LOAD:00038CDC STR             R3, [R11,#var_10]
 
 直接在最后面下个断点跑完这个函数，可以看到返回值是`0x80FF1E18`
 
-![14.png](resources/D966598681C23575C2DF39702233DC05.png =1298x715)
+![14.png](/assets/resources/D966598681C23575C2DF39702233DC05.png)
 
 这是整个大循环
 
-![15.png](resources/B1D0E4343F1F751F0E474D8224AC6132.png =1356x825)
+![15.png](/assets/resources/B1D0E4343F1F751F0E474D8224AC6132.png)
 
 回到上一层函数，这个值应该是固定的，暂时没有看到有其它参数对这个计算过程造成了影响
 
@@ -381,15 +381,15 @@ LOAD:00038CDC STR             R3, [R11,#var_10]
 
 这里非常绕，跟了好几次都没有找到关键的地方，后来半猜半想，根据调用`operator new[]()`的函数往回找，找到了和前几题一样的函数，虽然这里算法不一样，但是对于用户名和注册码的存储还是一样的
 
-![16.png](resources/D082E9F4D6609D960699AB8B2D298A56.png =1450x825)
+![16.png](/assets/resources/D082E9F4D6609D960699AB8B2D298A56.png)
 
 接下来是校验的地方，单步走一遍先，找到关键的地方，可以看到这里调用了四个函数
 
-![17.png](resources/F2384491B4C045081BA4B379975EF797.png =1085x685)
+![17.png](/assets/resources/F2384491B4C045081BA4B379975EF797.png)
 
 但是在静态时这位置我是手动找的，这个费劲，有的函数没有识别出来，红色的。。。。。。
 
-![18.png](resources/20B52228AF91A264ABC5C79811896269.png =1167x789)
+![18.png](/assets/resources/20B52228AF91A264ABC5C79811896269.png)
 
 其实还有非常多的函数未识别出来，不过并不是很重要
 
@@ -397,7 +397,7 @@ LOAD:00038CDC STR             R3, [R11,#var_10]
 
 那么`0x34`偏移指向的就是用户名
 
-![19.png](resources/F2B6BC6CC15BC4304C407341A1B6B73A.png =1920x1048)
+![19.png](/assets/resources/F2B6BC6CC15BC4304C407341A1B6B73A.png)
 
 并且有长度的限制，用户名长度应该在`[8, 24]`之间
 ```
@@ -420,7 +420,7 @@ LOAD:00005E7E BLS             loc_5E94
 
 第二个函数比较长
 
-![20.png](resources/12CCEFC73C98AFAD3E4A3445EBF5B9B6.png =1269x822)
+![20.png](/assets/resources/12CCEFC73C98AFAD3E4A3445EBF5B9B6.png)
 
 获取用户名
 ```
@@ -519,7 +519,7 @@ EF 0C 00 7A FA 19 21 E2  65 AF 00 6A 64 AF 00 7A
 
 补充一点，这个表其实不是动态生成的，静态分析时就可以dump出来
 
-![21.png](resources/D26D0D44367408B05050FFC1C1647D66.png =850x462)
+![21.png](/assets/resources/D26D0D44367408B05050FFC1C1647D66.png)
 
 因为异或的计算比较有意思，整个表循环异或一遍其实可以等效于异或一个值，这个值我们可以通过计算来确定，输入为`0x00`，看输出是什么即可
 
@@ -586,7 +586,7 @@ int main()
 
 可以看到整个异或表的异或效果和单独异或`0x93`的效果是一样的
 
-![22.png](resources/05D23A9EF243BC42F029D7D2D6453CC7.png =1164x641)
+![22.png](/assets/resources/05D23A9EF243BC42F029D7D2D6453CC7.png)
 
 计算完后会判断计算后的数据是否为0
 ```
@@ -627,13 +627,13 @@ LOAD:00005E34 BNE             loc_5D8E
 
 最终我们可以看到生成的8字节数据
 
-![23.png](resources/F67FDA39F1DCE4EE13C67E33E44ED964.png =1848x803)
+![23.png](/assets/resources/F67FDA39F1DCE4EE13C67E33E44ED964.png)
 
 在上图的位置下个断点，数据区跟随`R3`，可以看到完整的生成过程
 
 第三个函数，就一个小循环，应该比较简单
 
-![24.png](resources/889FCF8F529600C21E23D3863CD08B1D.png =1310x848)
+![24.png](/assets/resources/889FCF8F529600C21E23D3863CD08B1D.png)
 
 后来分析下来是我错了，它不简单，参数之类的预处理
 ```
@@ -667,7 +667,7 @@ LOAD:000060D2 BL              sub_57D4
 
 参数是计算后的8字节数据，里面有五个函数的调用，继续一个个跟
 
-![25.png](resources/850A6D1E53CAED79A11F4F495067F5AF.png =1351x734)
+![25.png](/assets/resources/850A6D1E53CAED79A11F4F495067F5AF.png)
 
 开始做参数的存储，重定位了一个Table
 ```
@@ -680,11 +680,11 @@ LOAD:000057DC ADD             R4, PC ; dword_165F8
 
 这个Table在动态调试的过程中是有值的
 
-![26.png](resources/21057AE145D06E84F11B1982080539F2.png =1274x821)
+![26.png](/assets/resources/21057AE145D06E84F11B1982080539F2.png)
 
 但是在静态分析的时候是空的，这里有一个`0x30`的偏移
 
-![27.png](resources/D8E4092BC4661D650501B274AC4DFDBC.png =1920x1051)
+![27.png](/assets/resources/D8E4092BC4661D650501B274AC4DFDBC.png)
 
 接下来以为我会继续分析下去吗？
 
@@ -698,7 +698,7 @@ LOAD:000057DC ADD             R4, PC ; dword_165F8
 
 运气不错，发现了DES加密算法的S盒，要是不知道S盒是啥的。。。。。。
 
-![28.png](resources/9438CCA14475E46D51CF53F3A53757BA.png =1094x543)
+![28.png](/assets/resources/9438CCA14475E46D51CF53F3A53757BA.png)
 
 它是八个二维数组，规格就是`8 * 4 * 16`
 
@@ -770,7 +770,7 @@ LOAD:00006104 BLX             strcat_0 ; 解密后的数据存储到s2
 
 最后第四个函数就是解密后的注册码和用户名进行对比，红色表示异常分支，蓝色表示正常循环，最后由两个灰色的代码块结束循环
 
-![29.png](resources/B75C768FA33559A407435FE2A3793FAE.png =1569x858)
+![29.png](/assets/resources/B75C768FA33559A407435FE2A3793FAE.png)
 
 那么，那么，那么
 
@@ -778,7 +778,7 @@ LOAD:00006104 BLX             strcat_0 ; 解密后的数据存储到s2
 
 不过好像出了点问题，哪里不对的样子
 
-![30.png](resources/49E0D72A120B15DED0C896B9F3BB4C0D.png =1656x822)
+![30.png](/assets/resources/49E0D72A120B15DED0C896B9F3BB4C0D.png)
 
 因为在分析的时候我注意到了取了用户名前8位进行计算秘钥，而且后续使用了十六位进行分组解密
 
@@ -790,23 +790,23 @@ LOAD:00006104 BLX             strcat_0 ; 解密后的数据存储到s2
 
 首先获取注册码
 
-![31.png](resources/B32717F89A35230554B695DC0EC76349.png =1318x714)
+![31.png](/assets/resources/B32717F89A35230554B695DC0EC76349.png)
 
 然后两组计算完后，得到解密后的数据
 
-![32.png](resources/811CE4E8B97A5446519AFAA963AB8751.png =1638x777)
+![32.png](/assets/resources/811CE4E8B97A5446519AFAA963AB8751.png)
 
 那这个就很尴尬了，怎么会多出八位
 
 百撕不得姐，于是找老司机求教
 
-![33.png](resources/1EC4CB3F4089E4018CF6735A482F99A2.png =1507x867)
+![33.png](/assets/resources/1EC4CB3F4089E4018CF6735A482F99A2.png)
 
 发现用Java的加解密库计算出来的数据并不正确，其实可能是校验的过程改了
 
 正常情况下解密出来的数据应该是这样的
 
-![34.png](resources/E58C84ABEBE883CB4A1432785E912BDD.png =1372x713)
+![34.png](/assets/resources/E58C84ABEBE883CB4A1432785E912BDD.png)
 
 而我上面那个是个啥玩意。。。。。。
 
@@ -864,7 +864,7 @@ static char S_Box[8][4][16] = {
 
 然后将动态调试时的S盒dump出来
 
-![35.png](resources/CBC29C4253BEBDAFA3EBFD45434B091F.png =1401x723)
+![35.png](/assets/resources/CBC29C4253BEBDAFA3EBFD45434B091F.png)
 
 跟前面拷贝出`xor_table`一样，使用保存为文件，然后WinHex转为C Source
 ```
@@ -906,7 +906,7 @@ unsigned AnsiChar data[512] = {
 
 然后跟上面正常的S盒进行循环对比，找到不同的地方
 
-![36.png](resources/EADBB5EBC3523E90CF43CE0D98BAC533.png =1153x657)
+![36.png](/assets/resources/EADBB5EBC3523E90CF43CE0D98BAC533.png)
 
 还真的有两处不一样，出题的你良心不会痛吗？
 
@@ -924,7 +924,7 @@ unsigned AnsiChar data[512] = {
 
 想了想，如果S盒有问题，那么其它几个Table和盒子可能也有问题，于是开始对比了一波，最后发现PC2_Table有问题
 
-![37.png](resources/21ED8DB3AA296F44D02532808AA998C2.png =1140x578)
+![37.png](/assets/resources/21ED8DB3AA296F44D02532808AA998C2.png)
 
 再一次的计算，发现注册码计算还是有问题，当时场面一度很尴尬。。。。。。
 
@@ -936,7 +936,7 @@ unsigned AnsiChar data[512] = {
 
 东平西凑，瞎改瞎改
 
-![38.png](resources/3E7CDB99EE3FB5BB690CBA45A1306120.png =372x630)
+![38.png](/assets/resources/3E7CDB99EE3FB5BB690CBA45A1306120.png)
 
 就先这样吧，眼泪掉下来，以后再找个时间分析一个这个样本的保护技术
 

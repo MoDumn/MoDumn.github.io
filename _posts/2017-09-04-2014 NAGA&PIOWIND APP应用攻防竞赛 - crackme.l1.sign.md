@@ -47,13 +47,13 @@ protected void onCreate(Bundle arg3) {
 
 使用IDA查看so，发现加密了
 
-![1.png](resources/3B361C16757CB1D4AE1D1E4DFAC52CAD.png =1920x1050)
+![1.png](/assets/resources/3B361C16757CB1D4AE1D1E4DFAC52CAD.png)
 
 动态调试把解密后的so文件dump出来
 
 先查看加载的内存基址
 
-![2.png](resources/1C53E94C712BCA058FFF30D365ABFAC0.png =1446x817)
+![2.png](/assets/resources/1C53E94C712BCA058FFF30D365ABFAC0.png)
 
 dump脚本如下，地址需要根据自己的调试环境确定
 ```
@@ -65,7 +65,7 @@ for(dex_addr = 0xA35C8000; dex_addr < 0xA3609000; dex_addr++)
 
 然后再打开，可以看到代码已经还原了
 
-![3.png](resources/52D577FF8DAF95AE4666CE27A696E47D.png =1920x1050)
+![3.png](/assets/resources/52D577FF8DAF95AE4666CE27A696E47D.png)
 
 先传入用户名和密码，然后转为`char *`类型的字符串，，接着调用两个函数`sub_536C()`和`sub_597C()`
 ```
@@ -118,7 +118,7 @@ LOAD:00005B96             ; End of function Java_com_crackme_MainActivity_crackm
 
 这个函数比较简单
 
-![4.png](resources/1B1F75D9C9BBC75CA6EE3B46F2A2FAAB.png =1920x1051)
+![4.png](/assets/resources/1B1F75D9C9BBC75CA6EE3B46F2A2FAAB.png)
 
 先传进来一个字符串指针，这个指针非常重要，后续的栈变量要使用这个字符串指针作为基址来寻找
 ```
@@ -143,7 +143,7 @@ LOAD:00005376 FF F7 D7 FF BL              sub_5328 ; R0 = sub_5328(pFailure)
 
 函数`sub_5328()`用于初始化某些栈空间
 
-![5.png](resources/3D13D00C1358815F7977ED540E6ADA4A.png =1490x852)
+![5.png](/assets/resources/3D13D00C1358815F7977ED540E6ADA4A.png)
 
 然后有两处判断，判断传入的两个字符串是否为空
 
@@ -247,7 +247,7 @@ LOAD:00005B84 FF F7 FA FE BL              sub_597C ; sub_597C(pFailure)
 
 传入`"Failure"`字符串的指针，该函数稍微有点长
 
-![6.png](resources/6EF5BED9C8AA6FC811A713EBF441CBC8.png =1381x815)
+![6.png](/assets/resources/6EF5BED9C8AA6FC811A713EBF441CBC8.png)
 
 存储`"pFailure"`后调用函数`sub_53E4()`
 ```
@@ -273,11 +273,11 @@ LOAD:00005982 FF F7 2F FD BL              sub_53E4
 密码：[12, 30]
 ```
 
-![7.png](resources/24DFAC64FB4DBB5D0E55A731F2F9BB41.png =1401x842)
+![7.png](/assets/resources/24DFAC64FB4DBB5D0E55A731F2F9BB41.png)
 
 校验密码的合法性，格式为`xxx-xxx-xxx-xxx`
 
-![8.png](resources/0714746A5D002960B238041FF74279AF.png =1569x813)
+![8.png](/assets/resources/0714746A5D002960B238041FF74279AF.png)
 
 调用`sub_5430()`
 ```
@@ -288,7 +288,7 @@ LOAD:000059B2 FF F7 3D FD BL              sub_5430
 
 这个函数的作用是将密码中的`-`去掉
 
-![9.png](resources/28AF2748047F051F7ECA76C3FB287F70.png =1596x844)
+![9.png](/assets/resources/28AF2748047F051F7ECA76C3FB287F70.png)
 
 获取一个Table，此Table一开始是空的
 ```
@@ -300,13 +300,13 @@ LOAD:000059C0 31 D1       BNE             loc_5A26
 
 全部都是`00`
 
-![10.png](resources/6128176EB44BD489A01ECFE753535B43.png =765x360)
+![10.png](/assets/resources/6128176EB44BD489A01ECFE753535B43.png)
 
 动态运行时会填充数据，第一次运行时会进行Table的生成，通过对这个Table第一个字节的判断，如果是`00`，表示未生成，如果是`01`，表示Table已生成，则跳过初始化Table的代码段
 
 动态运行时进行初始化
 
-![11.png](resources/280D03D24C9E584F75E5DD386BBBC730.png =1920x1048)
+![11.png](/assets/resources/280D03D24C9E584F75E5DD386BBBC730.png)
 
 接下来逐步进行计算，将Table的[2, 256]字节赋值为`0x80`
 ```
@@ -327,7 +327,7 @@ LOAD:000059CC 8A 42       CMP             R2, R1
 LOAD:000059CE FB D1       BNE             loc_59C8 ; Table[i] = 0x80
 ```
 
-![12.png](resources/C30454B8D16FDCB8D801D89672AD6D50.png =1920x1050)
+![12.png](/assets/resources/C30454B8D16FDCB8D801D89672AD6D50.png)
 
 赋值完成后开始处理Table，初始化一些值
 ```
@@ -354,7 +354,7 @@ LOAD:000059E2 F9 D1       BNE             loc_59D8 ;
 LOAD:000059E2                                     ; R0 = Base64Table + i
 ```
 
-![13.png](resources/7B21842EDABEC171568D1F236AB5D8A7.png =1920x1050)
+![13.png](/assets/resources/7B21842EDABEC171568D1F236AB5D8A7.png)
 
 取第`98`位
 ```
@@ -379,7 +379,7 @@ LOAD:000059F0 34 2B       CMP             R3, #52
 LOAD:000059F2 F8 D1       BNE             loc_59E6
 ```
 
-![14.png](resources/236DBDC1F0300FE954D37F5069D5F198.png =1920x1050)
+![14.png](/assets/resources/236DBDC1F0300FE954D37F5069D5F198.png)
 
 再次定位到`49`的位置
 ```
@@ -406,7 +406,7 @@ LOAD:00005A04 3E 2B       CMP             R3, #62
 LOAD:00005A06 F8 D1       BNE             loc_59FA
 ```
 
-![15.png](resources/8AEA3EE649CFF9AF41CC88CB184B1798.png =1920x1050)
+![15.png](/assets/resources/8AEA3EE649CFF9AF41CC88CB184B1798.png0)
 
 最后处理几个单个的位置
 ```
@@ -431,7 +431,7 @@ LOAD:00005A22 01 23       MOVS            R3, #1  ; R3 = 1
 LOAD:00005A24 13 70       STRB            R3, [R2] ; Base64Table[0] = 1 //设置已初始化Table标志
 ```
 
-![16.png](resources/BD8379EAEF5C860AC282DC1F5157A360.png =1920x1049)
+![16.png](/assets/resources/BD8379EAEF5C860AC282DC1F5157A360.png)
 
 整个表处理完是下面这样的，因为最开始是判断是否初始化的标志，所以整个表长度为257，由于多次调试，所以下面的内存地址和上面图中可能不一样
 ```
@@ -550,7 +550,7 @@ RA==
 
 入口判断了长度跟3的关系，长度如果不够说明已经计算到结尾，所以进入特殊处理的分支
 
-![17.png](resources/ECA80B6A5DD3FEBC6808E9FE2342432F.png =1244x821)
+![17.png](/assets/resources/ECA80B6A5DD3FEBC6808E9FE2342432F.png)
 
 接下来手动分析，进入解码前先进行长度的判断
 ```
@@ -728,7 +728,7 @@ LOAD:000054CC                                     ; 相等继续对比，i++
 
 不相等则异常退出
 
-![18.png](resources/E4F689E401208AD9A3334F644F16035D.png =1595x846)
+![18.png](/assets/resources/E4F689E401208AD9A3334F644F16035D.png)
 
 所以整个校验逻辑就是，输入用户名以及用户名的Base64编码作为密码即可，编码后的数据需要每3位插入一个`-`
 
@@ -736,4 +736,4 @@ LOAD:000054CC                                     ; 相等继续对比，i++
 
 大概就是这样
 
-![19.png](resources/B136CC7246DEBE02F6A373DC928677A3.png =486x688)
+![19.png](/assets/resources/B136CC7246DEBE02F6A373DC928677A3.png)

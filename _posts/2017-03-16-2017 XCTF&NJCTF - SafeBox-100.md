@@ -10,7 +10,7 @@ categories: Android CrackMe CTF
 
 大概的意思就是说，输入一个数字，然后结果一系列的判断，输出Flag
 
-![1.png](resources/E47428AC325548EC232774475AFE13C2.png =1290x551)
+![1.png](/assets/resources/E47428AC325548EC232774475AFE13C2.png)
 
 鉴于数字的判断范围已经知道，写个代码遍历一下就行了，然而比较懒，直接用反编译出来的Java代码
 ```
@@ -69,7 +69,7 @@ The flag's format is NJCTF{xxx} and xxx only include [a-z][A-Z][0-9].
 
 那这个`#`肯定是不对的，继续思考，发现还有一个类`androidTest`
 
-![2.png](resources/659BA49F5149DEAB5F9EEC6E17D8C8E0.png =1140x558)
+![2.png](/assets/resources/659BA49F5149DEAB5F9EEC6E17D8C8E0.png)
 
 和之前的Activity内容类似，尝试遍历这个类的代码
 ```

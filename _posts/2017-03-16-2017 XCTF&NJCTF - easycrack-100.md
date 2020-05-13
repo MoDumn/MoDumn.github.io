@@ -10,13 +10,13 @@ categories: Android CrackMe CTF
 
 在Java层没有太多逻辑，对输入框进行监听，当有输入的时候调用native层的函数进行校验
 
-![1.png](resources/F98999D6B1428310EACF038F94577943.png =1527x753)
+![1.png](/assets/resources/F98999D6B1428310EACF038F94577943.png)
 
 IDA载入so，没有动态注册，直接分析`parseText()`函数
 
 前面会调用Java层的`meaasgeMe()`函数
 
-![2.png](resources/3D63A01102C69B29CE19185049096419.png =962x198)
+![2.png](/assets/resources/3D63A01102C69B29CE19185049096419.png)
 
 而`messageMe"()`函数的功能是获取包名的最后一个串
 ```
@@ -59,7 +59,7 @@ V7D=^,M.E
 
 接着利用这个字符串对输入的字符串进行循环异或，就是把这个串循环复制自己，一个接一个，然后跟输入串长度一样，进行异或
 
-![3.png](resources/706389D1E6382F6CD566664EC5D635D4.png =869x289)
+![3.png](/assets/resources/706389D1E6382F6CD566664EC5D635D4.png)
 
 异或后存在新malloc出来的空间，首地址指针`pvInput_new`
 
@@ -69,27 +69,27 @@ V7D=^,M.E
 
 首先是这个key，如果你那里是三个很奇怪的数字，可以右键然后看`R`，就会和我这里一样的显示了
 
-![4.png](resources/96A80408B7EBF211ECE2F5E56457FA95.png =809x89)
+![4.png](/assets/resources/96A80408B7EBF211ECE2F5E56457FA95.png)
 
 加下来有两个`j_j_j__`开头的函数，如果没有看出这里是RC4加密的秘钥初始化的话可以跟进去
 
-![5.png](resources/6BF8448EF666E96DF16865D212403A86.png =740x40)
+![5.png](/assets/resources/6BF8448EF666E96DF16865D212403A86.png)
 
 跟到最里面的实现，RC4的秘钥初始化有比较明显的特征
 
-![6.png](resources/1EC36A71863125C73FBA54AF109349BB.png =1426x785)
+![6.png](/assets/resources/1EC36A71863125C73FBA54AF109349BB.png)
 
 然后是后面的加密过程
 
-![7.png](resources/9EA8FB41B430B4AE83294280AC2331B8.png =693x33)
+![7.png](/assets/resources/9EA8FB41B430B4AE83294280AC2331B8.png)
 
 跟进去，到最里面的实现过程，很明显的RC4加密
 
-![8.png](resources/34CEAB44A73C163D8D9205FB24C82B62.png =1007x403)
+![8.png](/assets/resources/34CEAB44A73C163D8D9205FB24C82B62.png)
 
 最后的逻辑非常清楚，就是拷贝RC4加密后的数据然后跟一个字符串对比
 
-![9.png](resources/A9CD3A70E14735A3D304BC3BDFF8CEC8.png =948x499)
+![9.png](/assets/resources/A9CD3A70E14735A3D304BC3BDFF8CEC8.png)
 
 所以到这里我们整理出流程：
 - 先输入数据，传入native层

@@ -9,7 +9,7 @@ categories: Android CrackMe CTF
 
 Jadx打开，发现关键的代码在这里
 
-![1.png](resources/F93F246F4C4FD2D161488E8FCEDAD557.png =953x383)
+![1.png](/assets/resources/F93F246F4C4FD2D161488E8FCEDAD557.png)
 
 `check()`函数的定义
 ```
@@ -25,7 +25,7 @@ public native int chec(int i, int i2);
 
 IDA载入对应so，修复一些类型并且重命名一些变量
 
-![2.png](resources/A6F5D60EE377F30BEAA801768EE5AE93.png =1082x458)
+![2.png](/assets/resources/A6F5D60EE377F30BEAA801768EE5AE93.png)
 
 逻辑很简单，我们输入数据，然后通过`check()`各种调用，在native中判断第二个参数，第二个参数传入的是99，并且获取了Java层的三个函数`check1()`，`check2()`，`check3()`的`MethodID`
 
@@ -94,7 +94,7 @@ int __fastcall _JNIEnv::CallIntMethod(JNIEnv *env, jobject jobject, int a3, int 
 
 我们知道，ARM传递参数会使用`R0-R3`，如果多的参数则使用栈传递，那么这里第5个参数是必然要使用栈传递了，我们观察最后一个压栈操作即可，最后一个压栈的操作是对R6寄存器进行处理，先减1，然后判断小于等于0，最后压栈进行参数传递，有一点要注意的是，R3是第三个参数，这个参数保存在栈中，为减1前的数据
 
-![3.png](resources/122CB32BA54CFDF878401B91ADF6333A.png =1593x624)
+![3.png](/assets/resources/122CB32BA54CFDF878401B91ADF6333A.png)
 
 也就是说，在`2 * Num_99 % 3`的时候，还未减一，而传递的参数为`Num_99 - 1`
 
@@ -167,7 +167,7 @@ public class Main {
 
 在APP中输入这串数字
 
-![4.jpg](resources/8ADC51DAD7EBA9A3552357D18E451D17.jpg =1440x1179)
+![4.jpg](/assets/resources/8ADC51DAD7EBA9A3552357D18E451D17.jpg)
 
 Flag：alictf{Jan6N100p3r}
 
