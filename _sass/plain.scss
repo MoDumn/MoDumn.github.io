@@ -245,11 +245,14 @@ main {
   }
 }
 
+// 控制顶栏页面描述
 #posts-label {
+  // font-family: Raleway, sans-serif;
+  font-family: "Helvetica", arial, freesans, clean, sans-serif;
   border-bottom: 1px solid #eee;
   font-size: 15px;
   color: #777;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   letter-spacing: 0.5px;
   padding-bottom: 10px;
   font-weight: normal;
