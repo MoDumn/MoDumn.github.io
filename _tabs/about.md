@@ -2,8 +2,13 @@
 title: About
 icon: fas fa-info
 order: 4
+
+# The About page
+# v2.0
+# https://github.com/cotes2020/jekyll-theme-chirpy
+# © 2017-2019 Cotes Chung
+# MIT License
 ---
 
-前360高级移动安全工程师，现主业卖鞋，iOS/macOS/Android系统二进制安全爱好者
 
-
+> **Note**: Add Markdown syntax content to file `_tabs/about.md` and it will show up on this page.
