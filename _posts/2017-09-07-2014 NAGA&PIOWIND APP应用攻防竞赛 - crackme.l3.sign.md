@@ -2,7 +2,7 @@
 layout: post
 title:  "2014 NAGA&PIOWIND APP应用攻防竞赛 - crackme.l3.sign"
 date:   2017-09-07 18:00:00 +520
-categories: Android_CTF
+tags: Android_CTF
 ---
 
 一开始用模拟器跑起来就崩溃，我以为是模拟器系统版本的问题，后来看了配置文件，发现没有问题，猜测可能是有反调试，第三题了应该出现反调试了

@@ -2,7 +2,7 @@
 layout: post
 title:  "2016 AliCTF - LoopAndLoop-100"
 date:   2017-03-15 18:00:00 +520
-categories: Android_CTF 
+tags: Android_CTF 
 ---
 
 2016年阿里CTF的第二道Mobile题，分值100

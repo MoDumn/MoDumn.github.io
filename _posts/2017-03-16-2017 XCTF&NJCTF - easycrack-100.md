@@ -2,7 +2,7 @@
 layout: post
 title:  "2017 XCTF&NJCTF - easycrack-100"
 date:   2017-03-16 18:00:00 +520
-categories: Android_CTF
+tags: Android_CTF
 ---
 
 2017XCTF南京站线上赛的题目，同时也是2017NJCTF的题目，可以在XCTF OJ上面找到，分值100

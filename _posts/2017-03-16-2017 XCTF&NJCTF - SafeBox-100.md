@@ -2,7 +2,7 @@
 layout: post
 title:  "2017 XCTF&NJCTF - SafeBox-100"
 date:   2017-03-16 18:00:00 +520
-categories: Android_CTF
+tags: Android_CTF
 ---
 
 2017XCTF&NJCTF线上赛的Mobile题，纯Java层，分值100，可以在XCTF OJ上找到

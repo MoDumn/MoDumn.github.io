@@ -2,7 +2,7 @@
 layout: post
 title:  "2014 NAGA&PIOWIND APP应用攻防竞赛 - crackme.l4.sign"
 date:   2017-09-11 18:00:00 +520
-categories: Android_CTF
+tags: Android_CTF
 ---
 
 Java层比较简单
