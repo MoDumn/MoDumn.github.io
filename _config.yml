@@ -1,4 +1,4 @@
-title: 一片荒芜的星球
+title: 大土豆的菜栏
 author: wnagzihxa1n
 email: wnagzihxa1n@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
@@ -13,7 +13,7 @@ sass:
   sass_dir: _sass
 plainwhite:
   name: wnagzihxa1n
-  tagline: Android Security
+  tagline: iOS/Android Security
   date_format: "%b %-d, %Y"
   sitemap: true # set to true to generate sitemap.xml content
 
@@ -50,5 +50,5 @@ plugins:
   # - jekyll-feed
 
 name: wnagzihxa1n
-description: 一片荒芜的星球
+description: 大土豆的菜栏
 url: https://wnagzihxa1n.vip
