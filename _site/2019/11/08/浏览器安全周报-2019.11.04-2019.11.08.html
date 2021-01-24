@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>浏览器安全周报 2019.11.04 - 2019.11.08 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="浏览器安全周报 2019.11.04 - 2019.11.08" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="谷歌紧急修复了两个洞，说是已经被黑客组织利用了，大家及时更新 https://securelist.com/chrome-0-day-exploit-cve-2019-13720-used-in-operation-wizardopium/94866/" />
+<meta property="og:description" content="谷歌紧急修复了两个洞，说是已经被黑客组织利用了，大家及时更新 https://securelist.com/chrome-0-day-exploit-cve-2019-13720-used-in-operation-wizardopium/94866/" />
+<link rel="canonical" href="http://localhost:4000/2019/11/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.04-2019.11.08.html" />
+<meta property="og:url" content="http://localhost:4000/2019/11/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.04-2019.11.08.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-08T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="浏览器安全周报 2019.11.04 - 2019.11.08" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"浏览器安全周报 2019.11.04 - 2019.11.08","dateModified":"2019-11-08T20:40:00+08:00","@type":"BlogPosting","description":"谷歌紧急修复了两个洞，说是已经被黑客组织利用了，大家及时更新 https://securelist.com/chrome-0-day-exploit-cve-2019-13720-used-in-operation-wizardopium/94866/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/11/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.04-2019.11.08.html"},"datePublished":"2019-11-08T20:40:00+08:00","url":"http://localhost:4000/2019/11/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.04-2019.11.08.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">浏览器安全周报 2019.11.04 - 2019.11.08</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/browser_security/">browser_security</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 08 Nov 2019</div>
+  
+  <p>谷歌紧急修复了两个洞，说是已经被黑客组织利用了，大家及时更新</p>
+<ul>
+  <li>https://securelist.com/chrome-0-day-exploit-cve-2019-13720-used-in-operation-wizardopium/94866/</li>
+</ul>
+
+<p>以下是这两个漏洞的链接，目前都不可访问，Poc我没搜到，这段时间再跟进一下</p>
+
+<p>CVE-2019-13720: Use-after-free in audio</p>
+<ul>
+  <li>https://bugs.chromium.org/p/chromium/issues/detail?id=1019226</li>
+</ul>
+
+<p>CVE-2019-13721: Use-after-free in PDFium</p>
+<ul>
+  <li>https://bugs.chromium.org/p/chromium/issues/detail?id=1013868</li>
+</ul>
+
+<p>这几周的UXSS有点多，然而我不懂</p>
+
+<p>WebKit：UXSS
+Issue 1914: WebKit: Universal XSS in JSObject::putInlineSlow and JSValue::putToPrimitive</p>
+<ul>
+  <li>https://bugs.chromium.org/p/project-zero/issues/detail?id=1914</li>
+</ul>
+
+<p>WebKit：整数溢出导致UXSS和类型混淆</p>
+
+<p>Issue 1919: WebKit: Integer overflow in NodeRareData::m_connectedFrameCount can lead to UXSS and type confusion</p>
+<ul>
+  <li>https://bugs.chromium.org/p/project-zero/issues/detail?id=1919</li>
+</ul>
+
+<p>JSC：bailout过程中的一个类型混淆</p>
+
+<p>Issue 1924: JSC: Type confusion during bailout when reconstructing arguments objects</p>
+<ul>
+  <li>https://bugs.chromium.org/p/project-zero/issues/detail?id=1924</li>
+</ul>
+
+<p>Chrome：绕过Site Isolation以及本地文件泄露</p>
+
+<p>Issue 1928: Chrome: Site Isolation bypass and local file disclosure via Payment Handler API</p>
+<ul>
+  <li>https://bugs.chromium.org/p/project-zero/issues/detail?id=1928</li>
+</ul>
+
+<p>最近把CRBUG-880207分析了一下，感谢JR师傅，宏阳师傅，p4nda师傅，ditto师傅，路遥师傅对我在这个漏洞分析过程遇到问题时的帮助</p>
+
+<p>这个漏洞是因为Turbofan对<code class="language-plaintext highlighter-rouge">Math.expm1</code>进行JIT优化的时候，未正确评估返回值的类型，漏了<code class="language-plaintext highlighter-rouge">-0</code>这个类型，在<code class="language-plaintext highlighter-rouge">Typer</code>的时候，传播了错误的类型信息，Turbofan根据错误的信息去掉了<code class="language-plaintext highlighter-rouge">CheckBound</code>这个节点，最后获得越界读写，造成了RCE</p>
+
+<p>在<code class="language-plaintext highlighter-rouge">Typer</code>阶段，会对<code class="language-plaintext highlighter-rouge">Math.expm1</code>返回如下几个类型，我们可以看到，这里没有<code class="language-plaintext highlighter-rouge">-0</code>这个类型</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Type Typer::Visitor::JSCallTyper(Type fun, Typer* t) {
+    ...
+    switch (function.shared().builtin_function_id()) {
+        ...
+        case BuiltinFunctionId::kMathAbs:
+        case BuiltinFunctionId::kMathExp:
+        case BuiltinFunctionId::kMathExpm1:
+            return Type::Union(Type::PlainNumber(), Type::NaN(), t-&gt;zone());
+</code></pre></div></div>
+
+<p>我们来看<code class="language-plaintext highlighter-rouge">Math.expm1</code>的定义：</p>
+<ul>
+  <li>https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Refereance/Global_Objects/Math/expm1</li>
+</ul>
+
+<blockquote>
+  <p>Math.expm1() 函数返回 E**x - 1, 其中 x 是该函数的参数, E 是自然对数的底数 2.718281828459045
+Math.expm1(1)     // 1.7182818284590453
+Math.expm1(-38)   // -1
+Math.expm1(“-38”) // -1
+Math.expm1(“foo”) // NaN</p>
+</blockquote>
+
+<p>那我们传入<code class="language-plaintext highlighter-rouge">-0</code>会发生什么呢？</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d8&gt; Math.expm1(-0)
+0
+</code></pre></div></div>
+
+<p>可以看到终端输出的是<code class="language-plaintext highlighter-rouge">0</code>，如果我们用<code class="language-plaintext highlighter-rouge">Object.is</code>来比较呢？</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d8&gt; Object.is(Math.expm1(-0), -0)
+true
+d8&gt; Object.is(Math.expm1(-0), 0)
+false
+</code></pre></div></div>
+
+<p>所以我们可以得到一个结论：<code class="language-plaintext highlighter-rouge">Math.expm1(-0)</code>得到的结果是<code class="language-plaintext highlighter-rouge">-0</code></p>
+
+<p>那么这个结论有什么用呢？</p>
+
+<p>我们结合一开始的优化代码来分析，在对<code class="language-plaintext highlighter-rouge">Math.expm1</code>进行<code class="language-plaintext highlighter-rouge">Typer</code>的时候，Turbofan认为这个函数只能返回以下几个类型，这其中并不包含<code class="language-plaintext highlighter-rouge">-0</code>，<code class="language-plaintext highlighter-rouge">-0</code>在Turbofan里用<code class="language-plaintext highlighter-rouge">MinusZero</code>来表示</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return Type::Union(Type::PlainNumber(), Type::NaN(), t-&gt;zone());
+</code></pre></div></div>
+
+<p>也就是说：在优化结束之后，会把<code class="language-plaintext highlighter-rouge">Object.is(Math.expm1(-0), -0)</code>直接折叠为<code class="language-plaintext highlighter-rouge">false</code>，也就是常量折叠</p>
+
+<p>我们接下来通过跟踪优化过程来分析</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  x64.debug git:(CRBUG-880207) ./d8 --allow-natives-syntax --trace-turbo Poc.js
+......
+false
+</code></pre></div></div>
+
+<p>在<code class="language-plaintext highlighter-rouge">Typer</code>阶段，注意看红色框框里的内容，我们可以看到<code class="language-plaintext highlighter-rouge">Math.expm1</code>的<code class="language-plaintext highlighter-rouge">Type</code>为<code class="language-plaintext highlighter-rouge">PlainNumber | NaN</code>，这个<code class="language-plaintext highlighter-rouge">Type</code>不包含<code class="language-plaintext highlighter-rouge">-0</code>，右边的节点类型是<code class="language-plaintext highlighter-rouge">MinusZero</code>也就是<code class="language-plaintext highlighter-rouge">-0</code>，这两个数据传入<code class="language-plaintext highlighter-rouge">SameValue</code>节点进行比较，这明显是恒不相等的</p>
+
+<p><img src="/assets/resources/9A6301EE2040F342941B2B4D867CF083.jpg" alt="IMAGE" /></p>
+
+<p>所以在<code class="language-plaintext highlighter-rouge">typed lowering</code>阶段，这三个节点会进行常量折叠为<code class="language-plaintext highlighter-rouge">false</code></p>
+
+<p><img src="/assets/resources/A290C3C2969C67D85B631703F6F52FED.jpg" alt="IMAGE" /></p>
+
+<p>所以我们可以看到打印出来的是<code class="language-plaintext highlighter-rouge">false</code></p>
+
+<p>漏洞的成因大概就是这样，至于如何利用这里简单讲一下，详细的利用过程正在单独写文章</p>
+
+<p>首先我们利用这个错误的类型推断，去传播错误的类型信息，但是太早被分析出来跟-0比较会被常量折叠，所以我们可以利用逃逸分析这个阶段，代码如下，以下这种方式，就可以防止在逃逸分析前进行常量折叠，然后逃逸分析之后的Simplified Lowering阶段会进行最后一次typing，就会错误的判断这里是一个恒为false的<code class="language-plaintext highlighter-rouge">Type</code>，之后把这个错误的<code class="language-plaintext highlighter-rouge">Type</code>传播下去，那么后面数组的存取前的<code class="language-plaintext highlighter-rouge">checkbound</code>节点就被会优化掉，不太好用的相对地址读写原语Get，然后我们写掉这个数组后面的一个数组长度，一个好用的相对地址读写原语Get！剩下的就是常规利用操作了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function foo(x) {
+    let a = [0.1, 0.2, 0.3, 0.4];
+    let o = {mz: -0};
+    let b = Object.is(Math.expm1(x), o.mz);
+    return a[b * 1337];
+}
+</code></pre></div></div>
+
+<p>再次感谢各位师傅们的帮助！</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2019/11/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.04-2019.11.08.html';
+     this.page.identifier = '/2019/11/08/浏览器安全周报 2019.11.04 - 2019.11.08';
+     this.page.title = '浏览器安全周报 2019.11.04 - 2019.11.08';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

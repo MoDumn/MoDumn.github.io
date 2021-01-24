@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>2017 SSCTF - 加密勒索软件-100 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="2017 SSCTF - 加密勒索软件-100" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="感谢沐师傅在赛后提供题目" />
+<meta property="og:description" content="感谢沐师傅在赛后提供题目" />
+<link rel="canonical" href="http://localhost:4000/2017/05/09/2017-SSCTF-%E5%8A%A0%E5%AF%86%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6-100.html" />
+<meta property="og:url" content="http://localhost:4000/2017/05/09/2017-SSCTF-%E5%8A%A0%E5%AF%86%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6-100.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-09T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="2017 SSCTF - 加密勒索软件-100" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"2017 SSCTF - 加密勒索软件-100","dateModified":"2017-05-09T20:40:00+08:00","@type":"BlogPosting","description":"感谢沐师傅在赛后提供题目","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2017/05/09/2017-SSCTF-%E5%8A%A0%E5%AF%86%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6-100.html"},"datePublished":"2017-05-09T20:40:00+08:00","url":"http://localhost:4000/2017/05/09/2017-SSCTF-%E5%8A%A0%E5%AF%86%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6-100.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">2017 SSCTF - 加密勒索软件-100</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/android_ctf/">android_ctf</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 09 May 2017</div>
+  
+  <p>感谢沐师傅在赛后提供题目</p>
+
+<p>压缩包内有一个Excel表格文件，打开显示损坏，猜测可能加密了，JEB载入APK样本，发现仅仅是Java层做处理，第一次打开应用的时候，会读取<code class="language-plaintext highlighter-rouge">Sharedpreferences</code>文件的<code class="language-plaintext highlighter-rouge">isEncryptrd</code>字段，第一次读取该字段，该字段为0，所以会要求用户输入6位数字作为密码</p>
+
+<p><img src="/assets/resources/12894E2A8AB2A0AAD1D51906E1D52DBE.png" alt="1.png" /></p>
+
+<p>在输入密码后，除了把<code class="language-plaintext highlighter-rouge">isEncrypted</code>改为1之外，就没有其它的操作了</p>
+
+<p>当第二次输入密码，会调用<code class="language-plaintext highlighter-rouge">check2()</code>进行处理</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Main.this.check2(Main.this.flagView.getText().toString())
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">check2()</code>函数在判断密码是否为空以及长度是否为6之后，调用了<code class="language-plaintext highlighter-rouge">verify2()</code>函数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private boolean check2(String arg5) {
+    boolean v0 = false;
+    if(arg5 == null || (arg5.isEmpty()) || arg5.length() != 6) {
+        Toast.makeText(((Context)this), 2131034115, 0).show();
+    }
+    else {
+        this.getSign(((Context)this));
+        v0 = this.verify2(this.getSign(((Context)this)), this.SIGN_MD5);
+    }
+
+    return v0;
+}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">verify2()</code>函数有两个参数，第一个参数通过函数调用的返回值来确定</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private String getSign(Context arg2) {
+    return ToolsUtils.getSignInfo(arg2, "com.seclover.ctf1");
+}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ToolsUtils.getSignInfo()</code>获取该应用签名的32位MD5值</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static String getSignInfo(Context arg3, String arg4) {
+    String v1;
+    try {
+        v1 = ToolsUtils.md5(Integer.toString(arg3.getPackageManager().getPackageInfo(arg4, 64).signatures[0].hashCode(), 16));
+    }
+    catch(Exception v0) {
+        v0.printStackTrace();
+        v1 = "invalid";
+    }
+
+    return v1;
+}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">verify2()</code>函数第二个参数是一个写死的MD5值</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.SIGN_MD5 = "a056d5ab1fa5c250c293a5b7588d0749";
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">verify2()</code>函数的校验过程看上去比较复杂</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private boolean verify2(String arg11, String arg12) {
+    boolean v6 = false;
+    byte[] v3 = ToolsUtils.SHA(arg11).getBytes();
+    byte[] v4 = ToolsUtils.SHA(arg12).getBytes();
+    int v0;
+    for(v0 = 0; v0 &lt; v3.length; ++v0) {
+        int v2;
+        for(v2 = 0; v2 &lt; v4.length; ++v2) {
+            v3[(v0 * v2 * 7 + 9) % v3.length] = ((byte)((v3[v0] ^ v2 * 5) % 127));
+            v4[(v0 * v2 * 7 + 9) % v4.length] = ((byte)((v4[v0] ^ v2 * 5) % 127));
+        }
+    }
+
+    int v1 = 0;
+    int v5 = v3.length &gt; v4.length ? v4.length : v3.length;
+    v0 = 0;
+    while(v0 &lt; v5) {
+        if((v3[v0] ^ v4[v0] ^ v3[v0]) != v3[v0]) {
+            v1 = 1;
+        }
+        else {
+            ++v0;
+            continue;
+        }
+
+        break;
+    }
+
+    if(v1 == 0) {
+        v6 = true;
+    }
+
+    return v6;
+}
+</code></pre></div></div>
+
+<p>在这里纠结了一会儿，感觉乱糟糟的</p>
+
+<p>后来实现想不下去了，于是决定看一下后面的代码，发现了这是一个坑</p>
+
+<p>在前面的代码中，<code class="language-plaintext highlighter-rouge">check2()</code>调用<code class="language-plaintext highlighter-rouge">verify2()</code>，但是在校验通过后，并没有对Excel表格文件的解密处理等操作，也没有读取文件相关的代码</p>
+
+<p>这就尴尬了。。。。。。</p>
+
+<p>在上下翻看代码的过程中，发现有读取文件的操作函数，通过<code class="language-plaintext highlighter-rouge">k1</code>数组跟<code class="language-plaintext highlighter-rouge">ctf1_encode.xlsx</code>进行异或，相隔<code class="language-plaintext highlighter-rouge">256</code>个字节异或一次</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private boolean encode(Context arg12) {
+    boolean v7 = false;
+    File v2 = new File(Environment.getExternalStorageDirectory(), "ctf1.xlsx");
+    if(v2.exists()) {
+        try {
+            FileOutputStream v5 = new FileOutputStream(new File(Environment.getExternalStorageDirectory(), "ctf1_encode.xlsx"));
+            FileInputStream v4 = new FileInputStream(v2);
+            byte[] v0 = new byte[v4.available()];
+            v4.read(v0);
+            int v6;
+            for(v6 = 0; v6 &lt; v0.length; v6 += 256) {
+                v0[v6] = ((byte)(v0[v6] ^ this.k1[v6 % this.k1.length]));
+            }
+
+            v5.write(v0);
+            v5.close();
+            v4.close();
+            v2.delete();
+            return true;
+        }
+        catch(Exception v1) {
+            goto label_40;
+        }
+    }
+
+    return v7;
+label_40:
+    v1.printStackTrace();
+    return true;
+}
+</code></pre></div></div>
+
+<p>找到<code class="language-plaintext highlighter-rouge">k1</code>的定义，并没有进行初始化</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private byte[] k1;
+</code></pre></div></div>
+
+<p>发现<code class="language-plaintext highlighter-rouge">k1</code>的初始化是在一个函数里进行的，这里的<code class="language-plaintext highlighter-rouge">arg11</code>应该就是输入的6位密码</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private boolean check(String arg11) {
+    int v9 = 100;
+    boolean v2 = false;
+    if(this.verify(this.getSign(((Context)this)), this.SIGN_MD5)) {
+        int v0;
+        for(v0 = 0; v0 &lt; v9; ++v0) {
+            int v1;
+            for(v1 = 0; v1 &lt; v9; ++v1) {
+                this.k1[(v0 + 17) * (v1 + 5) % this.k1.length] = ((byte)((this.k1[v0 * v1 % this.k1.length] ^ arg11.charAt(v0 * v1 % arg11.length()) * 7) % 127));
+            }
+        }
+
+        this.encode(((Context)this));
+        v2 = true;
+    }
+
+    return v2;
+}
+</code></pre></div></div>
+
+<p>6位的数字，爆破一下应该是可以的。。。。。。</p>
+
+<p>应该是。。。。。。可以。。。。。。的。。。。。。</p>
+
+<p>6位数爆破出来的样本仿佛有点多。。。。。。</p>
+
+<p>有点。。。。。。多。。。。。。</p>
+
+<p>研究一下文件格式，看一下有没有固定的数据可以直接确定</p>
+
+<p>确定的位置为<code class="language-plaintext highlighter-rouge">0x00</code>，<code class="language-plaintext highlighter-rouge">0x100</code>，<code class="language-plaintext highlighter-rouge">0x200</code>，<code class="language-plaintext highlighter-rouge">0x300</code>，<code class="language-plaintext highlighter-rouge">0x400</code>，<code class="language-plaintext highlighter-rouge">0x500</code></p>
+
+<p>首先是Magic Number，然后中间一片<code class="language-plaintext highlighter-rouge">00</code></p>
+
+<p><img src="/assets/resources/4FD16F618454191B6845249B797D6A98.png" alt="2.png" /></p>
+
+<p>再查看<code class="language-plaintext highlighter-rouge">ctf1_encode.xlsx</code></p>
+
+<p><img src="/assets/resources/204AA8561837F452CA7EACBD66D2662D.png" alt="3.png" /></p>
+
+<p>那么就可以确定前三个数字了</p>
+
+<p>再往下翻，发现两处</p>
+
+<p><img src="/assets/resources/A4291446561C74FC79ECE894955A85FD.png" alt="4.png" /></p>
+
+<p>正常的Excel是空的</p>
+
+<p><img src="/assets/resources/FF69AA52277609F2E6E1B317392DE4CE.png" alt="5.png" /></p>
+
+<p>现在可以大概的确定出来的数据</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0x00  : y : 0x37
+0x100 : y : 0x57
+0x200 : y : 0x28
+0x300 : ? : ?
+0x400 : y : 0x75
+0x500 : y : 0x67
+</code></pre></div></div>
+
+<p>接下来计算一下，强行写的很渣的代码，获取签名MD5这一步可以直接使用代码里的MD5值，反正是一样的，然后生成<code class="language-plaintext highlighter-rouge">k1</code>数组，接下来进行计算，判断五个已确定的数据，因为是异或计算，可以再次异或，只要还原为正常Excel的数据即可</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.security.MessageDigest;
+
+public class MyClass {
+
+	static byte[] k1;
+	static String MD5_KEY = "a056d5ab1fa5c250c293a5b7588d0749";
+	
+	public static void main(String[] args) throws Exception {
+		for(int i = 100000; i &lt; 999999; i++) {
+			verify(MD5_KEY);
+			//printByteHex(k1);
+			if(check(String.valueOf(i), i)) {
+				System.out.println("Find it : ctf1_decode_" + i + ".xlsx");
+			}
+		}
+	}
+	
+	private static void printByteHex(byte[] Data) {
+		int len = Data.length;
+		for (int i = 0; i &lt; len; i++) {
+			String temp = Integer.toHexString(Data[i] &amp; 0xFF);
+			if (temp.length() == 1) {
+				temp = "0" + temp;
+			}
+			System.out.print(", 0x" + temp);
+		}
+		System.out.println("");
+	}
+	
+	private static void verify(String key) {
+        k1 = SHA(key).getBytes();
+        for(int i = 0; i &lt; k1.length; i++) {
+            for(int j = 0; j &lt; k1.length; j++) {
+                k1[(i * j * 7 + 9) % k1.length] = ((byte)((k1[i] ^ j * 5) % 127));
+            }
+        }
+    }
+	
+	private static String SHA(String decript) {
+        int i = 0;
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+            messageDigest.update(decript.getBytes("utf-8"));
+            byte[] sourceData = messageDigest.digest();
+            StringBuffer stringBuffer = new StringBuffer();
+            int len = sourceData.length;
+            while(i &lt; len) {
+                String temp = Integer.toHexString(sourceData[i] &amp; 0xFF);
+                if(temp.length() &lt; 2) {
+                    stringBuffer.append(0);
+                }
+                stringBuffer.append(temp);
+                ++i;
+            }
+            String result = stringBuffer.toString();
+            return result;
+        }
+        catch(Exception v2) {
+            v2.printStackTrace();
+            return "";
+        }
+    }
+	
+	private static boolean check(String key, int index) {
+        for(int i = 0; i &lt; 100; i++) {
+            for(int j = 0; j &lt; 100; j++) {
+                k1[(i + 17) * (j + 5) % k1.length] = ((byte)((k1[i * j % k1.length] ^ key.charAt(i * j % key.length()) * 7) % 127));
+            }
+        }
+        if(MyClass.encode(k1, index)) {
+        	return true;
+        }
+        return false;
+    }
+	
+	private static boolean encode(byte[] key, int index) {
+        try {
+        	//printByteHex(key);
+            File file = new File("ctf1_encode.xlsx");
+            if (!file.exists()) {
+            	System.out.println("ctf1_encode.xlsx does not exist");
+        		return false;
+            }
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] temp = new byte[fileInputStream.available()];
+            fileInputStream.read(temp);
+            for(int i = 0; i &lt; temp.length; i += 256) {
+                temp[i] = ((byte)(temp[i] ^ key[i % key.length]));
+            }
+            if ((temp[0x00] != 'P') || (temp[0x100] != 0x00) || (temp[0x200] != 0x00) || (temp[0x400] != 0x00) || (temp[0x500] != 0x00)) {
+	            fileInputStream.close();
+				return false;
+			}
+            File output = new File("ctf1_decode_" + index + ".xlsx");
+        	FileOutputStream fileOutputStream = new FileOutputStream(output);
+            fileOutputStream.write(temp);
+            fileOutputStream.close();
+            fileInputStream.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+}
+</code></pre></div></div>
+
+<p>最后输出</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Find it : ctf1_decode_111355.xlsx
+Find it : ctf1_decode_112355.xlsx
+Find it : ctf1_decode_121359.xlsx
+Find it : ctf1_decode_125352.xlsx
+Find it : ctf1_decode_151359.xlsx
+Find it : ctf1_decode_155352.xlsx
+Find it : ctf1_decode_159357.xlsx
+Find it : ctf1_decode_162357.xlsx
+Find it : ctf1_decode_179351.xlsx
+</code></pre></div></div>
+
+<p>同时生成9个文件，<code class="language-plaintext highlighter-rouge">ctf1_decode_111355.xlsx</code>开始9个文件都是可以打开的</p>
+
+<p>打开后有一张图片</p>
+
+<p><img src="/assets/resources/8E2F4EC63BA1CFC4711F8AAE61FA1D7C.png" alt="6.png" /></p>
+
+<p>Flag : SSCTF{G0odJo13!}</p>
+
+<p>这题不知道是不是因为巧合，<code class="language-plaintext highlighter-rouge">0x400</code>的位置不知道是不是凑巧没有破坏文件格式，所以都能打开</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2017/05/09/2017-SSCTF-%E5%8A%A0%E5%AF%86%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6-100.html';
+     this.page.identifier = '/2017/05/09/2017 SSCTF - 加密勒索软件-100';
+     this.page.title = '2017 SSCTF - 加密勒索软件-100';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

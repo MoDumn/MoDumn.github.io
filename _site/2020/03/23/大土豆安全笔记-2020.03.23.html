@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>大土豆安全笔记 2020.03.23 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="大土豆安全笔记 2020.03.23" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="两百多集的视频，我已经两倍速看了一百集了，基础的知识复习起来很快的，目前的状态还是处于查漏补缺" />
+<meta property="og:description" content="两百多集的视频，我已经两倍速看了一百集了，基础的知识复习起来很快的，目前的状态还是处于查漏补缺" />
+<link rel="canonical" href="http://localhost:4000/2020/03/23/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.23.html" />
+<meta property="og:url" content="http://localhost:4000/2020/03/23/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.23.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-23T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="大土豆安全笔记 2020.03.23" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"大土豆安全笔记 2020.03.23","dateModified":"2020-03-23T20:40:00+08:00","@type":"BlogPosting","description":"两百多集的视频，我已经两倍速看了一百集了，基础的知识复习起来很快的，目前的状态还是处于查漏补缺","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/03/23/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.23.html"},"datePublished":"2020-03-23T20:40:00+08:00","url":"http://localhost:4000/2020/03/23/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.23.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">大土豆安全笔记 2020.03.23</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/security_daily/">security_daily</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 23 Mar 2020</div>
+  
+  <p>两百多集的视频，我已经两倍速看了一百集了，基础的知识复习起来很快的，目前的状态还是处于查漏补缺</p>
+
+<p>已经挑选好了下一阶段的学习视频，大概能把自己的技能树点成下面这样，也就列个大概，没列出来的不代表我不会，列出来的也不一定就代表我会，逐渐梳理逐渐完善，最起码说起来得擅长Java嘛</p>
+
+<p><img src="/assets/resources/8A973BFA2A8A9635C61E641389E2934A.jpg" alt="IMAGE" /></p>
+
+<p>我想周末早起读Paper，可惜醒来就是九点，于是在下午读了一篇Paper《EviHunter: Identifying Digital Evidence in the Permanent Storage of Android Devices via Static Analysis》，关于Android文件系统取证，发表于ACM CCS 2018，虽然是18年发表的，但也代表了一种自动化取证思路</p>
+
+<p>Paper，Slides都已经公开，目前我已经读完Paper了，接下来思考一下具体实现</p>
+<ul>
+  <li>https://arxiv.org/pdf/1808.06137.pdf</li>
+  <li>https://drive.google.com/file/d/1BuVSfVueBKidzo8T1cYBQB9jjR7QJuXH/view?usp=sharing</li>
+  <li>https://github.com/paradox5566/EviHunter</li>
+</ul>
+
+<p>对于Android系统取证这部分，因为一直没有接触过相关业务，所以我也没怎么关注，但是又觉得不接触不行，这一天天的行走江湖，万一哪天客户说要搞个取证，结果别的团队蹭蹭蹭就上了，最后留下我啥也不会只能一脸懵逼</p>
+
+<p>鉴于没什么经验，先搜了一本书学习，老外写的，13年国内第一次印刷，这几天抓紧时间把这本看完，对Android系统取证有个初步认识</p>
+
+<p><img src="/assets/resources/B741450BF18A09DE1A3EAA41849E0697.jpg" alt="IMAGE" /></p>
+
+<p>取证包含的技术还是挺有趣的，都是实打实的具体需求，我这里举一些我目前学习到的例子</p>
+<ol>
+  <li>微信聊天数据，比如照片，语音，视频</li>
+  <li>连接过的WiFi，比如WiFi名称，WiFi密码</li>
+</ol>
+
+<p>这篇Paper所做的工作主要是自动化文件系统取证，也就是通过静态分析提取App获取数据并写出到文件的流程，然后生成一个App Evidence Database，再和需要进取证的系统进行文件数据匹配，就可以自动化形成一份初步的文件系统取证报告</p>
+
+<p>作者说以前的文件系统取证依赖手动分析，以及关键词匹配，比较繁琐，咱以前没接触过，不敢说也不敢问呐</p>
+
+<p>一个大概的流程如下，一股浓浓计算机老师用的PPT既视感</p>
+
+<p><img src="/assets/resources/2DE7BC003D8046F153C59E7784B020B3.jpg" alt="IMAGE" /></p>
+
+<p>其实前面什么流程图都是可有可无的，就是静态分析创建AED，然后扫描匹配出报告，最关键的就是如何生成AED，主要还是数据流分析，有兴趣的同学可以参考Paper</p>
+
+<p>我个人对这篇论文有如下一些看法：</p>
+<ol>
+  <li>优点：静态分析是一个比较好的方法，能够尽可能的分析所有的代码，动态运行会有相当多的分支不能触发，当然有很多其它技术可以解决路径触发的问题，但是我们这里只需要提取数量并不大的指定路径，静态分析应该是相对好的选择</li>
+  <li>缺点：没有对动态下发逻辑进行判断，我们知道，现在安卓平台大量使用动态下发文件进行更新，有不少逻辑都是通过下发的代码包进行执行，本文没有对这部分进行考虑</li>
+  <li>改进：如果是我来做这份工作，我会考虑动静结合，静态可以使用作者的这部分工作，同时多一部分动态加载和热补丁相关的代码静态分析，然后尽可能去触发动态下发文件并加载的逻辑，把下发的文件结合原有的文件一起分析，可以更全面的进行文件系统取证</li>
+</ol>
+
+<p>关于Android逆向的知识点以及工具使用，我要是想起来就会分享</p>
+
+<p>现在某个应用存在一个点击按钮发送数据的界面，我们想跟踪一下数据组包的流程，直接去硬刚代码肯定不行，头都要磕破，可以查看它当前运行界面最顶层的Activity，找到当前界面对应的Activity，就知道对应的入口，进而可以开始分析逻辑，需要怎么做呢？</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7.0
+MacOS/Linux
+$ adb shell dumpsys activity | grep "mFocusedActivity"
+    mResumedActivity: ActivityRecord{915f2ce u0 com.android.iotlauncher/.DefaultIoTLauncher t78}
+
+Windows
+$ adb shell dumpsys activity activities | findstr "mFocusedActivity"
+    mResumedActivity: ActivityRecord{915f2ce u0 com.android.iotlauncher/.DefaultIoTLauncher t78}
+
+8.0
+MacOS/Linux
+$ adb shell dumpsys activity activities | grep "mResumedActivity"
+    mResumedActivity: ActivityRecord{915f2ce u0 com.android.iotlauncher/.DefaultIoTLauncher t78}
+
+Windows
+$ adb shell dumpsys activity activities | findstr "mResumedActivity"
+    mResumedActivity: ActivityRecord{915f2ce u0 com.android.iotlauncher/.DefaultIoTLauncher t78}
+</code></pre></div></div>
+
+<p>说到这里，我想到了一个很有意思的UI自动化点击思路，我先记录一下，等我这段时间学习完，调研一波看看业界的研究进度</p>
+
+<p>我最近发现一件事情：我跟不同年龄层的师傅们聊天，容易被刚毕业的DISS，但是跟比我毕业早的师傅们一起聊天就极其愉快了，可能是小盆友们觉得我都毕业好几年了比他们这群刚毕业的混得还差，优越感爆棚了吧:(</p>
+
+<p>我想想，确实也是，好好学习呦，不然马上要被2020届的DISS了呦</p>
+
+<p>人生真是起起落落落落落落，7000没到，兜兜转转回到6000的角落</p>
+
+<p>最后，开开心心上岛</p>
+
+<p><img src="/assets/resources/8172E94FA403BD31A9336B2C7A8A8CE0.jpg" alt="IMAGE" /></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2020/03/23/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.23.html';
+     this.page.identifier = '/2020/03/23/大土豆安全笔记 2020.03.23';
+     this.page.title = '大土豆安全笔记 2020.03.23';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

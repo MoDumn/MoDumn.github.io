@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>浏览器安全周报 2019.05.06 - 2019.05.10 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="浏览器安全周报 2019.05.06 - 2019.05.10" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="这周把一些JS引擎模糊测试相关的Paper稍微整理了一下，目前对这部分其实还没有什么清晰的概念，周四的时候有一个公众号发了篇Paper《CodeAlchemist: Semantics-Aware Code Generation to Find Vulnerabilities in JavaScript Engines》的解读，刚好我可以读着看看感觉，代码我还没跑 https://mp.weixin.qq.com/s/cFtiJUnSS3REEYG1N46-fA https://daramg.gift/paper/han-ndss2019.pdf https://github.com/SoftSec-KAIST/CodeAlchemist" />
+<meta property="og:description" content="这周把一些JS引擎模糊测试相关的Paper稍微整理了一下，目前对这部分其实还没有什么清晰的概念，周四的时候有一个公众号发了篇Paper《CodeAlchemist: Semantics-Aware Code Generation to Find Vulnerabilities in JavaScript Engines》的解读，刚好我可以读着看看感觉，代码我还没跑 https://mp.weixin.qq.com/s/cFtiJUnSS3REEYG1N46-fA https://daramg.gift/paper/han-ndss2019.pdf https://github.com/SoftSec-KAIST/CodeAlchemist" />
+<link rel="canonical" href="http://localhost:4000/2019/05/10/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.05.06-2019.05.10.html" />
+<meta property="og:url" content="http://localhost:4000/2019/05/10/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.05.06-2019.05.10.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-10T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="浏览器安全周报 2019.05.06 - 2019.05.10" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"浏览器安全周报 2019.05.06 - 2019.05.10","dateModified":"2019-05-10T20:40:00+08:00","@type":"BlogPosting","description":"这周把一些JS引擎模糊测试相关的Paper稍微整理了一下，目前对这部分其实还没有什么清晰的概念，周四的时候有一个公众号发了篇Paper《CodeAlchemist: Semantics-Aware Code Generation to Find Vulnerabilities in JavaScript Engines》的解读，刚好我可以读着看看感觉，代码我还没跑 https://mp.weixin.qq.com/s/cFtiJUnSS3REEYG1N46-fA https://daramg.gift/paper/han-ndss2019.pdf https://github.com/SoftSec-KAIST/CodeAlchemist","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/05/10/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.05.06-2019.05.10.html"},"datePublished":"2019-05-10T20:40:00+08:00","url":"http://localhost:4000/2019/05/10/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.05.06-2019.05.10.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">浏览器安全周报 2019.05.06 - 2019.05.10</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/browser_security/">browser_security</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 10 May 2019</div>
+  
+  <p>这周把一些JS引擎模糊测试相关的Paper稍微整理了一下，目前对这部分其实还没有什么清晰的概念，周四的时候有一个公众号发了篇Paper《CodeAlchemist: Semantics-Aware Code Generation to Find Vulnerabilities in JavaScript Engines》的解读，刚好我可以读着看看感觉，代码我还没跑</p>
+<ul>
+  <li>https://mp.weixin.qq.com/s/cFtiJUnSS3REEYG1N46-fA</li>
+  <li>https://daramg.gift/paper/han-ndss2019.pdf</li>
+  <li>https://github.com/SoftSec-KAIST/CodeAlchemist</li>
+</ul>
+
+<p>把之前CRBUG-821137的分析文章补上了利用部分，构造任意读写原语的核心就是下面这张图了，五一之前在组内做了一次分享，讲的就是这个洞，下面这张图是我后来写利用文章的时候补上的，有了这张内存示意图应该就很好理解如何构造出任意读写原语了</p>
+
+<p><img src="/assets/resources/83542930BD55C1C7EA827C83E2DB1A03.jpg" alt="IMAGE" /></p>
+
+<p>一个Chrome泄漏信息的洞，发送<code class="language-plaintext highlighter-rouge">com.android.chrome.GPU_PROFILER.START/STOP</code>广播可以把本机的数据保存到任意的路径</p>
+<ul>
+  <li>https://bugs.chromium.org/p/chromium/issues/detail?id=922627</li>
+</ul>
+
+<p>作者把它保存到了私有目录，所以需要su才能读取，其实是可以写到sdcard的</p>
+
+<p><img src="/assets/resources/78AE87E95D7D4EB3210BDCD9299B83E4.jpg" alt="IMAGE" /></p>
+
+<p>修复方式就是判断系统是不是Debug模式编译的</p>
+<ul>
+  <li>https://chromium.googlesource.com/chromium/src.git/+/f68b18e1ec1cadb432998d3ccc084e0a8c1ae5cd%5E%21/#F0</li>
+</ul>
+
+<p><img src="/assets/resources/432842785FE35EA81CDB00748528A4B4.jpg" alt="IMAGE" /></p>
+
+<p>这个洞4000刀，我酸菜鱼又酸了</p>
+
+<p><img src="/assets/resources/F74E25B60E594F23F1E2F05E38F07633.jpg" alt="IMAGE" /></p>
+
+<p>继续学习JS，本周的进度不错，最近喜欢看前端的面试题，里面有不少的JS技巧和对细节的深入讲解，有点想加入数字的奇舞团</p>
+
+<p>以下来自玄武推送</p>
+
+<p>CVE-2018-0777 ChakraCore JIT LICM漏洞分析， 作者babyJessica，在后端循环优化中对归纳变量进行过度常量折叠使 BoundCheck在LICM过程中被外提，最终导致越界</p>
+<ul>
+  <li>https://exp101t.blogspot.com/2018/05/cve-2018-0777-code-motion.html</li>
+</ul>
+
+<p>CVE-2019-9810 0vercl0k公开Pwn2Own 2019 Richard Zhu和Amat Cama攻破FireFox的漏洞EXP，其中使用到了BigInt来进行利用</p>
+<ul>
+  <li>https://github.com/0vercl0k/CVE-2019-9810</li>
+</ul>
+
+<p>在即将推出的基于Chromium的Edge浏览器中，将支持一种“IE 模式”，用于兼容比较古老的企业内部站点。这个对Edge的安全将有一种“降级” 的影响，以前IE对VBScript和Adobe Flash插件的支持也曾出现过这种“兼容模式”，安全研究员Ivan Fratric关于这个问题的看法：</p>
+<ul>
+  <li>https://www.computerworld.com/article/3393193/microsoft-will-demote-ie-to-a-mode-inside-edge.html</li>
+  <li>https://twitter.com/ifsecure/status/1126059685168197632</li>
+  <li>https://www.youtube.com/watch?v=E2dm29djv3U&amp;feature=youtu.be&amp;t=372</li>
+</ul>
+
+<p>PJ0研究员Saelo在0x41Con上分享的JIT利用技巧，侧重于JIT类型混淆漏洞</p>
+<ul>
+  <li>https://saelo.github.io/presentations/41con_19_jit_exploitation_tricks.pdf</li>
+</ul>
+
+<p>这周还看了下iOS越狱相关的技术，一直觉得iOS和macOS上的利用挺优雅的，蛮有意思，我只是了解下，多接触下隔壁领域的技术，并没有打算上手搞，也许再过几个星期我又去接触路由器了</p>
+
+<p>From Zero to tfp0 - Part 1: Prologue</p>
+<ul>
+  <li>https://www.darkmatter.ae/papers-articles/from-zero-to-tfp0-part-1-prologue/</li>
+</ul>
+
+<p>From zero to tfp0 - Part 2: Walkthrough of the voucher_swap exploit</p>
+<ul>
+  <li>https://www.darkmatter.ae/papers-articles/from-zero-to-tfp0-part-2-a-walkthrough-of-the-voucher_swap-exploit/</li>
+</ul>
+
+<p>Jailbreaks Demystified</p>
+<ul>
+  <li>https://geosn0w.github.io/Jailbreaks-Demystified/</li>
+</ul>
+
+<p>腾讯科恩实验室Black Hat USA 2018议题解读 | iOS越狱细节揭秘</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/155896</li>
+</ul>
+
+<p>这个我之前看过一次，来自今年的35C3，详解越狱的前世今生，只是我当时很菜（现在也菜），看的一知半解的，属于常看常新的文章</p>
+<ul>
+  <li>https://api.tihmstar.net/35c3slides.pdf</li>
+</ul>
+
+<p>俗话说：行走江湖，技多不压身，万一哪天工头发现我是个菜逼把我开除了，我好带着这一啤酒肚乱七八糟的墨水跟另一个工地的工头吹牛逼啊！</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2019/05/10/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.05.06-2019.05.10.html';
+     this.page.identifier = '/2019/05/10/浏览器安全周报 2019.05.06 - 2019.05.10';
+     this.page.title = '浏览器安全周报 2019.05.06 - 2019.05.10';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

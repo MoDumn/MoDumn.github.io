@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>浏览器安全周报 2019.04.22 - 2019.04.26 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="浏览器安全周报 2019.04.22 - 2019.04.26" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="看了一篇关于JavaScriptCore的文章：《漏洞利用的艺术 攻击JavaScript引擎》，这篇文章是一篇翻译，上周的周报我说学习了一篇玄武实验室师傅写的JavaScriptCore的漏洞利用分析，其实就是这个洞，国外有人写了一篇英文的分析，然后我这周看的是这篇分析的翻译，玄武那篇是单独写的 http://www.phrack.org/papers/attacking_javascript_engines.html" />
+<meta property="og:description" content="看了一篇关于JavaScriptCore的文章：《漏洞利用的艺术 攻击JavaScript引擎》，这篇文章是一篇翻译，上周的周报我说学习了一篇玄武实验室师傅写的JavaScriptCore的漏洞利用分析，其实就是这个洞，国外有人写了一篇英文的分析，然后我这周看的是这篇分析的翻译，玄武那篇是单独写的 http://www.phrack.org/papers/attacking_javascript_engines.html" />
+<link rel="canonical" href="http://localhost:4000/2019/04/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.04.22-2019.04.26.html" />
+<meta property="og:url" content="http://localhost:4000/2019/04/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.04.22-2019.04.26.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-26T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="浏览器安全周报 2019.04.22 - 2019.04.26" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"浏览器安全周报 2019.04.22 - 2019.04.26","dateModified":"2019-04-26T20:40:00+08:00","@type":"BlogPosting","description":"看了一篇关于JavaScriptCore的文章：《漏洞利用的艺术 攻击JavaScript引擎》，这篇文章是一篇翻译，上周的周报我说学习了一篇玄武实验室师傅写的JavaScriptCore的漏洞利用分析，其实就是这个洞，国外有人写了一篇英文的分析，然后我这周看的是这篇分析的翻译，玄武那篇是单独写的 http://www.phrack.org/papers/attacking_javascript_engines.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/04/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.04.22-2019.04.26.html"},"datePublished":"2019-04-26T20:40:00+08:00","url":"http://localhost:4000/2019/04/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.04.22-2019.04.26.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">浏览器安全周报 2019.04.22 - 2019.04.26</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/browser_security/">browser_security</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 26 Apr 2019</div>
+  
+  <p>看了一篇关于JavaScriptCore的文章：《漏洞利用的艺术 攻击JavaScript引擎》，这篇文章是一篇翻译，上周的周报我说学习了一篇玄武实验室师傅写的JavaScriptCore的漏洞利用分析，其实就是这个洞，国外有人写了一篇英文的分析，然后我这周看的是这篇分析的翻译，玄武那篇是单独写的</p>
+<ul>
+  <li>http://www.phrack.org/papers/attacking_javascript_engines.html</li>
+</ul>
+
+<p>今年Zer0con的议题有好些关于浏览器的，一直关注的大牛Stephen讲完后在推上面公开了PPT，真好</p>
+<ul>
+  <li>https://docs.google.com/presentation/d/1DJcWByz11jLoQyNhmOvkZSrkgcVhllIlCHmal1tGzaw/edit?usp=sharing</li>
+</ul>
+
+<p>在读一个专栏的文章：《How Blink Works 中文译文》</p>
+<ul>
+  <li>https://zhuanlan.zhihu.com/p/52918538</li>
+</ul>
+
+<p>最近三年内Chromium的UXSS漏洞和漏洞缓解机制的分析</p>
+<ul>
+  <li>https://ai.google/research/pubs/pub48028</li>
+</ul>
+
+<p>PJ0公开了一个Chromium整数溢出，第二个是Chromium官方Issue，目前不能访问</p>
+<ul>
+  <li>https://bugs.chromium.org/p/project-zero/issues/detail?id=1793</li>
+  <li>https://bugs.chromium.org/p/chromium/issues/detail?id=938251</li>
+</ul>
+
+<p>一篇0CTF关于JS引擎的漏洞分析，这篇文章我看完很有感悟，我觉得我缺少作者能在拿到一个未知内部机制二进制文件的情况下，通过Poc，报错，一步步的捋清楚内部机制，再写漏洞利用的能力</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/177270</li>
+</ul>
+
+<p>玄武实验室推了一篇比较涨知识的文章，关于Chromium的Courgette如何利用反汇编机制缩小安装包体积</p>
+<ul>
+  <li>https://www.chromium.org/developers/design-documents/software-updates-courgette</li>
+</ul>
+
+<p>再聊五毛钱别的：</p>
+
+<p>我在玄武看到一个跟浏览器没什么关系的文章，我觉得对自己个人而言非常重要了，讲的是逆向一个未知游戏文件格式</p>
+<ul>
+  <li>https://www.unknowncheats.me/forum/general-programming-and-reversing/332048-example-reversing-undocumented-game-file-format.html</li>
+</ul>
+
+<p>我想的是和上面说到一个0CTF那道题一样，我现在缺少这种精神，是的，是精神，我搞逆向也挺多年了，不管是纯汇编分析，F5辅助还是动态打Hook我都掌握的还行，能力不是问题，可是现在就是缺少自己主动去逆向这些东西的精神，这个东西短期内搞得出来还成，搞不出来，业务产出就凉凉（干啥前都要掂量一下产出这种心理我已经在极力的克服了）</p>
+
+<p>因为我原先并不是漏洞方向，所以最近把JS课程弄完，跟着走一遍Linux下的漏洞利用，相关教程还是蛮多的，快速上手不是问题</p>
+
+<p>再说一句，今天好些个朋友找我问*ctf的一道V8，我还在想着缺少这种主动探索未知的精神咋办呢，刚好自己独立干一波！</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2019/04/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.04.22-2019.04.26.html';
+     this.page.identifier = '/2019/04/26/浏览器安全周报 2019.04.22 - 2019.04.26';
+     this.page.title = '浏览器安全周报 2019.04.22 - 2019.04.26';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

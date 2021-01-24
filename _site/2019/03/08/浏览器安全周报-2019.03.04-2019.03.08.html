@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>浏览器安全周报 2019.03.04 - 2019.03.08 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="浏览器安全周报 2019.03.04 - 2019.03.08" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="这周看玄武日常推送的排版风格不太一样了，是不是负责写推送的师傅换人了？" />
+<meta property="og:description" content="这周看玄武日常推送的排版风格不太一样了，是不是负责写推送的师傅换人了？" />
+<link rel="canonical" href="http://localhost:4000/2019/03/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.03.04-2019.03.08.html" />
+<meta property="og:url" content="http://localhost:4000/2019/03/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.03.04-2019.03.08.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-08T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="浏览器安全周报 2019.03.04 - 2019.03.08" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"浏览器安全周报 2019.03.04 - 2019.03.08","dateModified":"2019-03-08T20:40:00+08:00","@type":"BlogPosting","description":"这周看玄武日常推送的排版风格不太一样了，是不是负责写推送的师傅换人了？","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/03/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.03.04-2019.03.08.html"},"datePublished":"2019-03-08T20:40:00+08:00","url":"http://localhost:4000/2019/03/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.03.04-2019.03.08.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">浏览器安全周报 2019.03.04 - 2019.03.08</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/browser_security/">browser_security</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 08 Mar 2019</div>
+  
+  <p>这周看玄武日常推送的排版风格不太一样了，是不是负责写推送的师傅换人了？</p>
+
+<p>这周把近年来V8的一些越界访问，类型混淆这些可以利用的漏洞Poc整理了一下，大概是48个，接下来的时间开始把漏洞分析给写上，顺带练练写利用的能力，以下是部分：</p>
+
+<p><img src="/assets/resources/E32CC9E6BC079F46F201B7332DC1EFB3.jpg" alt="IMAGE" /></p>
+
+<p>我发现自己分析浏览器漏洞的速度特别慢，最近每一次出个新漏洞，大概率在一个我之前没接触过的模块，光了解这个模块以及跑通Poc就得花一大段时间，还是太菜了</p>
+
+<p>（要是部门里有个研究Chrome的大佬估计这情况就会好很多吧）</p>
+
+<p>谷歌修了一个在野被利用的漏洞：CVE-2019-5786</p>
+<ul>
+  <li>https://chromereleases.googleblog.com/2019/03/stable-channel-update-for-desktop.html</li>
+</ul>
+
+<p>绕JS沙箱</p>
+<ul>
+  <li>https://licenciaparahackear.github.io/en/posts/bypassing-a-restrictive-js-sandbox/</li>
+</ul>
+
+<p>现在总感觉时间不够用，想仔细搞搞浏览器，业务上又一大堆事情要处理，可以说是很羡慕那些在专门搞浏览器安全研究实验室或者团队里的师傅了</p>
+
+<p>其实说这些东西，倒不是我想要有师傅手把手带，只是希望能有一个领路的，平时可以和我聊聊天，告诉我这样的初学者搞浏览器安全的大方向是什么，想搞哪个模块可以给点学习和研究的建议，而不是我现在这样分析一个洞，发现这个知识点不会，然后又发现那个也不会，啥都搞，也啥都搞不好，感觉我现在浏览器安全这棵技能树千疮百孔的，💊！</p>
+
+<p>好在最近还是有点收获的，先把编译原理这个部分弄一遍，一些之前分析的漏洞估计会有新的理解</p>
+
+<p>之前有师傅说，写Fuzzer得先看看能不能把历史的漏洞给跑出来，过段时间等这些洞分析完，看看写个像样的JSFuzzer跑跑这些历史漏洞</p>
+
+<p>感觉JS也得再深入的学习，现在我掌握的语法还是比较基础</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2019/03/08/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.03.04-2019.03.08.html';
+     this.page.identifier = '/2019/03/08/浏览器安全周报 2019.03.04 - 2019.03.08';
+     this.page.title = '浏览器安全周报 2019.03.04 - 2019.03.08';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

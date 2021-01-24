@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>大土豆安全笔记 2020.06.15 幸好消费不起三文鱼 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="大土豆安全笔记 2020.06.15 幸好消费不起三文鱼" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="还记得上周说的那八个漏洞嘛，我已经学习完了" />
+<meta property="og:description" content="还记得上周说的那八个漏洞嘛，我已经学习完了" />
+<link rel="canonical" href="http://localhost:4000/2020/06/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.06.15.html" />
+<meta property="og:url" content="http://localhost:4000/2020/06/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.06.15.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-15T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="大土豆安全笔记 2020.06.15 幸好消费不起三文鱼" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"大土豆安全笔记 2020.06.15 幸好消费不起三文鱼","dateModified":"2020-06-15T20:40:00+08:00","@type":"BlogPosting","description":"还记得上周说的那八个漏洞嘛，我已经学习完了","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/06/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.06.15.html"},"datePublished":"2020-06-15T20:40:00+08:00","url":"http://localhost:4000/2020/06/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.06.15.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">大土豆安全笔记 2020.06.15 幸好消费不起三文鱼</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/security_daily/">security_daily</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 15 Jun 2020</div>
+  
+  <p>还记得上周说的那八个漏洞嘛，我已经学习完了</p>
+
+<p>Windows并不是我擅长的平台，但是Android我熟悉，此处先省略若干思路</p>
+
+<p>安卓应用审计这种东西，可大可小</p>
+
+<p>说实话很多人也就做到个本地测试，任意备份，任意调试，证书没校验，抓包明文等等</p>
+
+<p>稍微深入点的，搞个注册码爆破，越权，注入</p>
+
+<p>我一直认为搞应用安全其实最后都需要回到渗透，本地那些审计点玩一段时间就没啥搞头了</p>
+
+<p>下面这个视频也就是讲了个大概，如果是刚入门的同学可以看看</p>
+
+<p>《Getting Started With Hacking Android &amp; iOS Apps? Tools, Techniques and resources》</p>
+<ul>
+  <li>https://www.youtube.com/watch?v=BQWcUjzxJE0</li>
+</ul>
+
+<p>不懂渗透没关系，起码得结合业务，比如逻辑漏洞</p>
+
+<p>我举个例子，我以前刷SRC经常遇到的一种情况</p>
+
+<p>首先是HTTP传输数据，数据包格式如下，我做了一些省略，只显示具体字段</p>
+
+<p>登录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>method=login&amp;_xmlString=&lt;s passwd="8924aec8faf3c1cb54a25dbc176bb97f"/&gt;
+</code></pre></div></div>
+
+<p>修改密码</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>method=modifyPass&amp;_xmlString=&lt;s oldPass="8924aec8faf3c1cb54a25dbc176bb97f"/&gt;&lt;s newPass="5eeac75b9ef13164957248ab61d246bd"/&gt;
+</code></pre></div></div>
+
+<p>我们可以看到它的数据包中间是使用了一个<code class="language-plaintext highlighter-rouge">method</code>字段用于表示当前客户端所做的操作</p>
+
+<p>尤其是修改密码，它使用的是非常简单的MD5算法进行传值</p>
+
+<p>所以我们直接构造这个包，就可以在局域网下把用户的密码给改了</p>
+
+<p>我跟别人分享这些思路的时候，总有人觉得这种漏洞很垃圾</p>
+
+<p>千里之堤，溃于蚁穴</p>
+
+<p>这些看起来很垃圾的漏洞往往组合起来能够达到意想不到的效果</p>
+
+<p>有时候看别人的Slides总觉得差那么点意思，该讲的不讲，都是些陈芝麻烂谷子的东西</p>
+
+<p>这个分享一大半全是表情包，哈哈哈哈哈哈哈哈哈哈</p>
+
+<p>《Reversing Android Apps》</p>
+<ul>
+  <li>https://speakerdeck.com/marcobrador/mdevcamp-2020-reversing-android-apps</li>
+</ul>
+
+<p>我之所以会看这些是因为有些老外的思路确实是好，拍案叫绝！</p>
+
+<p>不看的话容易错过</p>
+
+<p>下面这篇也当个乐看吧</p>
+
+<p>《Hacking Android Application: Secret Diary》</p>
+<ul>
+  <li>https://medium.com/swlh/hacking-android-application-secret-diary-2fa50d5d4b75</li>
+</ul>
+
+<p>老外写文章有个特点，前面铺垫一堆看起来很牛逼的系统各种底层原理，最后来一个贼简单的指令修改</p>
+
+<p>哈哈哈哈哈哈哈哈哈哈</p>
+
+<p>这种汇总形式的项目特别容易集Star，还不错</p>
+<ul>
+  <li>https://github.com/vaib25vicky/awesome-mobile-security</li>
+</ul>
+
+<p>周末在整理书籍，把渗透相关的书都搬到了组里，曰：大土豆捐赠</p>
+
+<p>最后有个好消息，我已经搭建好了Read The Docs</p>
+
+<p>我会把之前写的文章重新整理一份，逐渐上传，整理成电子书的形式</p>
+
+<p>好啦，各位老板到钟了</p>
+
+<p>Duang~Duang~Duang~</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2020/06/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.06.15.html';
+     this.page.identifier = '/2020/06/15/大土豆安全笔记 2020.06.15';
+     this.page.title = '大土豆安全笔记 2020.06.15 幸好消费不起三文鱼';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

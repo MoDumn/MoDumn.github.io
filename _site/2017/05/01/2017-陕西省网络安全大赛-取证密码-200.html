@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>2017 陕西省网络安全大赛 - 取证密码-200 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="2017 陕西省网络安全大赛 - 取证密码-200" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="这题可以秒掉" />
+<meta property="og:description" content="这题可以秒掉" />
+<link rel="canonical" href="http://localhost:4000/2017/05/01/2017-%E9%99%95%E8%A5%BF%E7%9C%81%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%8F%96%E8%AF%81%E5%AF%86%E7%A0%81-200.html" />
+<meta property="og:url" content="http://localhost:4000/2017/05/01/2017-%E9%99%95%E8%A5%BF%E7%9C%81%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%8F%96%E8%AF%81%E5%AF%86%E7%A0%81-200.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-01T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="2017 陕西省网络安全大赛 - 取证密码-200" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"2017 陕西省网络安全大赛 - 取证密码-200","dateModified":"2017-05-01T20:40:00+08:00","@type":"BlogPosting","description":"这题可以秒掉","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2017/05/01/2017-%E9%99%95%E8%A5%BF%E7%9C%81%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%8F%96%E8%AF%81%E5%AF%86%E7%A0%81-200.html"},"datePublished":"2017-05-01T20:40:00+08:00","url":"http://localhost:4000/2017/05/01/2017-%E9%99%95%E8%A5%BF%E7%9C%81%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%8F%96%E8%AF%81%E5%AF%86%E7%A0%81-200.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">2017 陕西省网络安全大赛 - 取证密码-200</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/android_ctf/">android_ctf</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 01 May 2017</div>
+  
+  <p>这题可以秒掉</p>
+
+<p>一进来就看到这个，这代码写的很渣，不想看逻辑，跳过看后面的</p>
+
+<p><img src="/assets/resources/FAB265FC24393676DE9844B67B17CBF5.png" alt="1.png" /></p>
+
+<p>在<code class="language-plaintext highlighter-rouge">onCreate()</code>函数里发现有一个结束主Activity的操作，直接去掉</p>
+
+<p><img src="/assets/resources/C48A69A1153DBE57AA57FA87F86BD11A.png" alt="2.png" /></p>
+
+<p>使用AndroidKiller修改代码</p>
+
+<p><img src="/assets/resources/6805F978DE86D1F3B27593D85034F6D1.png" alt="3.png" /></p>
+
+<p>把<code class="language-plaintext highlighter-rouge">run()</code>的逻辑全去掉</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># virtual methods
+.method public run()V
+    .locals 0
+
+    .prologue
+    return-void
+.end method
+</code></pre></div></div>
+
+<p>编译安装，可以正常运行</p>
+
+<p>然后分析下面的点击事件，<code class="language-plaintext highlighter-rouge">GetString.encrypt()</code>函数是native函数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(GetString.encrypt(MainActivity.this.editText.getText().toString().trim())) {
+    Toast.makeText(MainActivity.this, "OK", 0).show();
+}
+else {
+    Toast.makeText(MainActivity.this, "Error", 0).show();
+}
+</code></pre></div></div>
+
+<p>不是很懂为什么作者要在这里定义三个函数。。。。。。仿佛是一个第一次用NDK的新手。。。。。。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class GetString {
+    static {
+        System.loadLibrary("XTU");
+    }
+
+    public GetString() {
+        super();
+    }
+
+    public static native boolean encrypt(GetString this, String arg1) {
+    }
+
+    public static native String getString(GetString this) {
+    }
+
+    public static native String sendData(GetString this, String arg1) {
+    }
+}
+</code></pre></div></div>
+
+<p>使用IDA分析so</p>
+
+<p><img src="/assets/resources/E6B60BD42528676031F1C17721DFC679.png" alt="4.png" /></p>
+
+<p>在分析完逻辑后，有两个方法可以拿到RegCode</p>
+<ul>
+  <li>写代码跑，计算逻辑都已经给了</li>
+  <li>动态调试，下个断点跟踪</li>
+</ul>
+
+<p>第一种方法，找到赋值的数组</p>
+
+<p><img src="/assets/resources/0F52E3075DB7B4E88722C8D45A5DADF6.png" alt="5.png" /></p>
+
+<p>简单写了个脚本跑</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># coding:utf-8
+
+RegCode_Cal = []
+Key = list("yInS567!bcNOUV8vwCDefXYZadoPQRGx13ghTpqrsHklm2EFtuJKLzMijAB094W")
+dest = [0x39, 0x20, 0x07, 0x0A, 0x20, 0x29, 0x13, 0x02, 0x3A, 0xC, 0x11, 0x31, 0x3B, 0x0B, 0x07]
+
+for i in range(len(dest)):
+	RegCode_Cal.append(Key[dest[i]])
+
+print "".join(RegCode_Cal)
+</code></pre></div></div>
+
+<p>结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A1!N1HenBUCu0O!
+</code></pre></div></div>
+
+<p>第二种方法，动态调试出结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\wangz\Desktop
+$ adb forward tcp:23946 tcp:23946
+C:\Users\wangz\Desktop
+$ adb shell
+root@jflte:/ # cd data/local
+root@jflte:/data/local # ./as
+IDA Android 32-bit remote debug server(ST) v1.19. Hex-Rays (c) 2004-2015
+Listening on port #23946...
+
+</code></pre></div></div>
+
+<p>再次使用IDA打开一个新的so文件，无任何修改，下面两个地方下断点都可以</p>
+
+<p><img src="/assets/resources/23CC6F4BF30255FFE72E6A1267F4345B.png" alt="6.png" /></p>
+
+<p>挂上应用，断下来后，在数据窗口跟随R4就可以看到RegCode</p>
+
+<p><img src="/assets/resources/7C87838477E43F22EF48C3828D277119.png" alt="7.png" /></p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2017/05/01/2017-%E9%99%95%E8%A5%BF%E7%9C%81%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%8F%96%E8%AF%81%E5%AF%86%E7%A0%81-200.html';
+     this.page.identifier = '/2017/05/01/2017 陕西省网络安全大赛 - 取证密码-200';
+     this.page.title = '2017 陕西省网络安全大赛 - 取证密码-200';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

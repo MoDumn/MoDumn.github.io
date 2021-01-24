@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>浏览器安全周报 2019.12.09 - 2019.12.13 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="浏览器安全周报 2019.12.09 - 2019.12.13" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="这几天我一直在看大佬们的分析文章，在读到一篇文章的时候，我想通了一些事情，不掌握一个引擎的设计和基本思想，又如何融汇贯通呢？以OpCode为单位进行优化，以Block为单位进行优化，以Function为单位进行优化，不掌握编译器的基本思想，直接读源码去学习引擎怕是事倍功半，连这些概念都听不到" />
+<meta property="og:description" content="这几天我一直在看大佬们的分析文章，在读到一篇文章的时候，我想通了一些事情，不掌握一个引擎的设计和基本思想，又如何融汇贯通呢？以OpCode为单位进行优化，以Block为单位进行优化，以Function为单位进行优化，不掌握编译器的基本思想，直接读源码去学习引擎怕是事倍功半，连这些概念都听不到" />
+<link rel="canonical" href="http://localhost:4000/2019/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.12.09-2019.12.13.html" />
+<meta property="og:url" content="http://localhost:4000/2019/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.12.09-2019.12.13.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-13T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="浏览器安全周报 2019.12.09 - 2019.12.13" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"浏览器安全周报 2019.12.09 - 2019.12.13","dateModified":"2019-12-13T20:40:00+08:00","@type":"BlogPosting","description":"这几天我一直在看大佬们的分析文章，在读到一篇文章的时候，我想通了一些事情，不掌握一个引擎的设计和基本思想，又如何融汇贯通呢？以OpCode为单位进行优化，以Block为单位进行优化，以Function为单位进行优化，不掌握编译器的基本思想，直接读源码去学习引擎怕是事倍功半，连这些概念都听不到","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.12.09-2019.12.13.html"},"datePublished":"2019-12-13T20:40:00+08:00","url":"http://localhost:4000/2019/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.12.09-2019.12.13.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">浏览器安全周报 2019.12.09 - 2019.12.13</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/browser_security/">browser_security</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 13 Dec 2019</div>
+  
+  <p>这几天我一直在看大佬们的分析文章，在读到一篇文章的时候，我想通了一些事情，不掌握一个引擎的设计和基本思想，又如何融汇贯通呢？以OpCode为单位进行优化，以Block为单位进行优化，以Function为单位进行优化，不掌握编译器的基本思想，直接读源码去学习引擎怕是事倍功半，连这些概念都听不到</p>
+
+<p><img src="/assets/resources/30BA7D7D696600B833CA3AE52F0E9C0C.jpg" alt="IMAGE" /></p>
+
+<p>我之前搞脱壳，一开始啥都不懂，跟着别人的分析文章调试，别人给个样本，告诉我在<code class="language-plaintext highlighter-rouge">dvmDexFileOpenPartial</code>函数下断点，一代壳轻松脱掉，有的壳弱一点，二代壳也可以脱掉，但是如果壳升级了呢？从一开始的解密Dex文件进行动态加载变成了类抽取，函数抽取呢？这时候需要什么能力才能自己研究出新的脱壳方法？</p>
+
+<p>不懂脱壳的还是只会在<code class="language-plaintext highlighter-rouge">dvmDexFileOpenPartial</code>函数下断点，脱出来的必然是空Dex，因为函数指令没有恢复，肯定是脱不出来的，后来我系统的分析了APP的安装过程源码，如何加载Dex，Dalvik和ART如何执行Method，整套源码其实不多，所以可以直接上手阅读，在读完之后，我就对虚拟机执行Opcode的整个流程有了一个清晰的认识，我也知道为什么要在<code class="language-plaintext highlighter-rouge">dvmDexFileOpenPartial</code>函数下断点，以及还有哪里可以下断点</p>
+
+<p>回到刚才说过的一个问题，如果从单纯的Dex加载变成类抽取，函数抽取该如何脱壳？</p>
+
+<p>在掌握了虚拟机执行流程之后，这个问题便轻松解决，因为加载Dex前我们进行一次主动加载，就可以拿到所有的真实数据，因为壳只是保护作用，当系统要加载这个类里的某个方法或者函数，必然是要主动恢复真实指令的，那些提出脱壳点的大佬肯定都是把安卓虚拟机源码研究的滚瓜烂熟才能找到脱壳的方法，尤其是后期的指令替换等加固方式，需要在一个整体的角度进行思考，而不是单纯的下个断点就可以解决的，这里就不过多深入讨论了</p>
+
+<p>所以我觉得我现在就处于盲目跟着别人学习漏洞分析的情况，我不知道为什么要定位到大佬说的函数，不知道如何进入这个函数，哪个阶段进来的，JIT优化的入口在哪里，我知道JIT优化要先生成IR，但是它是如何生成的呢？数据流分析是什么？在哪里实现？大佬们文章里提到的kill机制是什么？为什么要有kill机制，这个机制都用在了哪里？</p>
+
+<p>以上这一连串的问题就是我最近学习浏览器时候思考的，当然还有更多的问题没有写出来，其实这些问题有很多在我掌握了编译原理，掌握一个引擎的设计之后就很轻松解决了</p>
+
+<p>下面这些在之前一篇安全周报里提过一次，但是后来因为学习漏洞逐渐就跑偏了，现在再回过头来想想，确实如此</p>
+
+<p>RednaxelaFX写的文章/回答的导航帖</p>
+<ul>
+  <li>https://zhuanlan.zhihu.com/p/25042028</li>
+</ul>
+
+<p>新手上路学习JavaScript引擎实现——路线图</p>
+<ul>
+  <li>https://zhuanlan.zhihu.com/p/20505562</li>
+</ul>
+
+<p>各JavaScript引擎的简介，及相关资料/博客收集帖</p>
+<ul>
+  <li>https://hllvm-group.iteye.com/group/topic/37596</li>
+</ul>
+
+<p>学习编程语言与编译优化的一个书单</p>
+<ul>
+  <li>https://zhuanlan.zhihu.com/p/20130808</li>
+</ul>
+
+<p>有哪些常用 JIT 算法？</p>
+<ul>
+  <li>https://www.zhihu.com/question/54748092/answer/141903877</li>
+</ul>
+
+<p>以上说的都是我个人想法，不接受任何反驳，你拿了千万Bounty也好，你是谷歌名人堂也罢，大家的目的不一样，对我而言，我要对JS引擎实现有一个整体的认识，把知识学的扎实最重要</p>
+
+<p>本周一些浏览器资料</p>
+
+<p>大佬开始搞WebKit了？</p>
+<ul>
+  <li>https://i.blackhat.com/eu-19/Thursday/eu-19-Wang-Thinking-Outside-The-JIT-Compiler-Understanding-And-Bypassing-StructureID-Randomization-With-Generic-And-Old-School-Methods.pdf</li>
+</ul>
+
+<p>Firefox CVE-2019-11708 &amp; CVE-2019-9810 Exploit</p>
+<ul>
+  <li>https://github.com/0vercl0k/CVE-2019-11708</li>
+</ul>
+
+<p>前几天盘古发了一篇文章，学习了一波</p>
+<ul>
+  <li>https://mp.weixin.qq.com/s/UBZv0pd7Nr-o-NMxjV53RQ</li>
+</ul>
+
+<p>我发现自己现在看东西都看的很仔细，可能是因为学习浏览器的后遗症，最早学习开发的时候，教程一大把，看啥都很快的看过去了，有些不懂的知识点跳过也就忘了，后来学习浏览器的时候，发现资料真的少，就只能一个词一个词的仔细看，我有时候跟大佬们聊天也是，我问大佬一个知识点或者一个漏洞，大佬给我哇啦哇啦讲一堆，然后我就把大佬给我讲的仔细的记录下来，尽可能的学习透彻，虽然笨但是感觉还是学到了很多东西的</p>
+
+<p>比如这篇文章里的第二段，<code class="language-plaintext highlighter-rouge">ASLR</code>和<code class="language-plaintext highlighter-rouge">DEP/W^X</code>我之前学习过，也掌握的还行，所以没有太多关注，<code class="language-plaintext highlighter-rouge">ROP/JOP/Data-only attack</code>我只知道<code class="language-plaintext highlighter-rouge">ROP</code>，后面提到的论文我也没看过，既然有这么一篇论文，其它同类型的研究论文也应该找出来仔细读读，再后面的<code class="language-plaintext highlighter-rouge">控制流完整性技术</code>等等，我发现我现在真的是珍惜这种大佬们的经验分享，能学到特别多的东西</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2000年代后期，地址空间随机化(ASLR)和数据执行保护(DEP/W^X)成为两项通用的基础性漏洞利用缓解机制。不幸的是，利用漏洞实现内存信息泄漏绕过ASLR进而基于ROP/JOP/Data-only attack等攻击技巧实现任意代码执行成为攻击者的标配 (更多内存漏洞攻防技术信息，参考《SoK: Eternal War in Memory》，https://people.eecs.berkeley.edu/~dawnsong/papers/Oakland13-SoK-CR.pdf）。面对大量绕过ASLR和(DEP/W^X)的漏洞利用样本，学术界再次掀起了针对细颗粒度ASLR和Anti-ROP的研究高潮。最终，在诸多潜在技术解决方案中，（粗颗粒度的）控制流完整性技术赢得了市场 (不同CFI机制实现细节和对比，参考 《Control-Flow Integrity: Precision, Security, and Performance》https://nebelwelt.net/publications/files/17CSUR.pdf)。为此，英特尔芯片中新增了CET特性（Control-flow Enforcement Technology），支持粗颗粒度前向跳转地址验证和基于Shadow Stack Register的返回地址验证，ARM V8.3标准中增加了PAC（Pointer Authentication Code）特性，支持对数据或者代码指针完整性的验证；LLVM、GCC、VisualStudio等主流编译器中支持开启CFI特性的编译选项；Windows、Android、iOS等操作系统都已经在用户态和内核态实现不同粒度的CFI机制。
+</code></pre></div></div>
+
+<p>最近感觉状态不太好，年底想稍微休息下，看点简单的东西，就先不学习浏览器相关的漏洞了</p>
+
+<p>打算回归下老本行，看看Frida的一些好玩的利用，看看大佬们写的逆向文章，再看看编译原理的优化部分，到元旦之后再开始计划下2020年想做的事情</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2019/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.12.09-2019.12.13.html';
+     this.page.identifier = '/2019/12/13/浏览器安全周报 2019.12.09 - 2019.12.13';
+     this.page.title = '浏览器安全周报 2019.12.09 - 2019.12.13';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

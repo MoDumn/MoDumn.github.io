@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>大土豆安全笔记 2020.08.21 偷懒一周，内空 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="大土豆安全笔记 2020.08.21 偷懒一周，内空" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="我这周翻了翻奇安信的安全创客汇，想找找灵感，发现2017年有一个移动安全的项目" />
+<meta property="og:description" content="我这周翻了翻奇安信的安全创客汇，想找找灵感，发现2017年有一个移动安全的项目" />
+<link rel="canonical" href="http://localhost:4000/2020/08/21/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.08.21.html" />
+<meta property="og:url" content="http://localhost:4000/2020/08/21/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.08.21.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-21T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="大土豆安全笔记 2020.08.21 偷懒一周，内空" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"大土豆安全笔记 2020.08.21 偷懒一周，内空","dateModified":"2020-08-21T20:40:00+08:00","@type":"BlogPosting","description":"我这周翻了翻奇安信的安全创客汇，想找找灵感，发现2017年有一个移动安全的项目","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/08/21/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.08.21.html"},"datePublished":"2020-08-21T20:40:00+08:00","url":"http://localhost:4000/2020/08/21/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.08.21.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">大土豆安全笔记 2020.08.21 偷懒一周，内空</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/security_daily/">security_daily</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 21 Aug 2020</div>
+  
+  <p>我这周翻了翻奇安信的安全创客汇，想找找灵感，发现2017年有一个移动安全的项目</p>
+
+<p><img src="/assets/resources/B00A16B10BE64F27B859518C6F9D25D8.jpg" alt="IMAGE" /></p>
+
+<p>2017年那会加固是一个白热化的时代，大家都在研究第四代壳，也就是广义上的VMP</p>
+
+<p>第几代壳的定义大家可能有不同的理解，我这里简单讲讲</p>
+
+<p>第一代壳的特征是隐藏主Dex，通过动态运行以插件的形式进行调用</p>
+
+<p>第二代壳开始就开始有掉队的厂商了，像娜迦这种跑得快的，他们研发的第一代壳就是某些厂商的第二代壳，第二代壳的特征是代码抽取，比如阿里有一年的移动安全挑战赛，其中有一题就是使用的代码抽取，动态跑起来之后，可以看到其指令都存在于另一块内存里</p>
+
+<p>第三代壳的特征是So加固，比如OLLVM混淆，同时伴随Dex指令动态解密，运行时才解密</p>
+
+<p>第四代壳的特征是VMP，不过这里的VMP我并非很认可，更像是一个粗糙的代码映射，2017年之后我没有再跟进加固技术，不知道发展的怎么样了，这里不过多评价</p>
+
+<p>整个加固技术的发展就是如上所述</p>
+
+<p>客户也不全是不懂技术，人家也是会多方打听的</p>
+
+<p><img src="/assets/resources/337EF8D99F78678C00D52DA1E849402A.jpg" alt="IMAGE" /></p>
+
+<p>Electron框架写的东西我见过好几个RCE了，这里有一个安全汇总也是挺好的</p>
+<ul>
+  <li>https://github.com/doyensec/awesome-electronjs-hacking</li>
+</ul>
+
+<p>Qmage MMS RCE到这里应该是完结了，很强！</p>
+<ul>
+  <li>https://github.com/googleprojectzero/SkCodecFuzzer/tree/master/mms_exploit</li>
+</ul>
+
+<p>Hacker101 CTF里的Android题目我认为出的很好</p>
+<ul>
+  <li>https://medium.com/bugbountywriteup/hacker101-ctf-android-challenge-writeups-f830a382c3ce</li>
+</ul>
+
+<p>常见国内的Android题目一般就三种</p>
+<ol>
+  <li>简单Java层注册算法分析，无混淆</li>
+  <li>复杂Native层注册算法分析，有强混淆</li>
+  <li>极少数利用Apk特性</li>
+</ol>
+
+<p>总结一下就是：绝大部分偏逆向能力</p>
+
+<p>2017年的时候，阿里出过一次移动安全挑战赛，那一次挑战赛从本质上来说，属于Real World CTF，比如声纹破解，攻破了这道题就等于把阿里的声纹防御机制攻破，这种赛题没啥意思</p>
+
+<p>换句话来说，这就是另一种形式的众测</p>
+
+<p>我发现了一个神器，很多次我想推出我的移动硬盘，总是显示被占用，这个工具可以看到是哪个进程在占用移动硬盘</p>
+<ul>
+  <li>http://www.hamsoftengineering.com/products/wkm/wkm.html</li>
+</ul>
+
+<p>下周或者下下周准备休一星期假，目的地上海，所以提前跟两百四十八位读者朋友们说一声，本月不会有新文章了</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2020/08/21/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.08.21.html';
+     this.page.identifier = '/2020/08/21/大土豆安全笔记 2020.08.21';
+     this.page.title = '大土豆安全笔记 2020.08.21 偷懒一周，内空';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>大土豆安全笔记 2020.09.04 又双叒叕写了一个工具 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="大土豆安全笔记 2020.09.04 又双叒叕写了一个工具" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="最近真的是沉迷写各种工具" />
+<meta property="og:description" content="最近真的是沉迷写各种工具" />
+<link rel="canonical" href="http://localhost:4000/2020/09/04/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.09.04.html" />
+<meta property="og:url" content="http://localhost:4000/2020/09/04/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.09.04.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-04T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="大土豆安全笔记 2020.09.04 又双叒叕写了一个工具" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"大土豆安全笔记 2020.09.04 又双叒叕写了一个工具","dateModified":"2020-09-04T20:40:00+08:00","@type":"BlogPosting","description":"最近真的是沉迷写各种工具","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/09/04/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.09.04.html"},"datePublished":"2020-09-04T20:40:00+08:00","url":"http://localhost:4000/2020/09/04/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.09.04.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">大土豆安全笔记 2020.09.04 又双叒叕写了一个工具</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/security_daily/">security_daily</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 04 Sep 2020</div>
+  
+  <p>最近真的是沉迷写各种工具</p>
+
+<p>是的，造了很多轮子，你看这轮子，它又大又圆</p>
+
+<p>这周主要做的就是优化扫描性能，同样的代码，同样的应用，我在MBP上三分钟就出结果，放服务器跑，整整跑了八个小时</p>
+
+<p>这玩意挺考验文件读写性能的，所以我从软件硬件两个角度同时优化，换了960G的SSD，用Go重新写了图搜索模块，舒服多了</p>
+
+<p>我觉得近两年国家对网络安全的重视程度远超从前，隔三差五就是挂一堆违规产品名单出来，该负责的部门和人愿意有所为，是件好事</p>
+
+<p>《工信部通报101款侵害用户权益行为APP》：今年第四批了，总有那么些业务线说了不听，非要人家给你挂出来才跟个孙子一样到处求爷爷告奶奶找人问怎么办，国内这些APP，有一个算一个，拿了这么多权限，收集了那么多数据，你真的用上了吗？还不是躺在数据库里吃灰</p>
+<ul>
+  <li>https://mp.weixin.qq.com/s/E0oyxKlvoutqM_MEfpaaUQ</li>
+</ul>
+
+<p>《北京管局启动APP数据安全检测专项行动》：最近APP的数据安全治理工作开始行动起来了，走过路过都看看，该做的趁早就做了</p>
+<ul>
+  <li>https://mp.weixin.qq.com/s/fsATZMeisYt-1WsHSCET6A</li>
+</ul>
+
+<p>下面是俩通知，各位，可以积极为国家做贡献了</p>
+
+<p>《关于征集《信息安全技术 移动互联网应用程序（APP）SDK安全指南》标准参编单位的通知》</p>
+<ul>
+  <li>https://mp.weixin.qq.com/s/7RG0zHUFfoCfq0hXOcK51A</li>
+</ul>
+
+<p>《关于征集《信息安全技术 移动互联网应用程序（APP）个人信息安全测评规范》标准参编单位的通知》</p>
+<ul>
+  <li>https://mp.weixin.qq.com/s/-LwxbkZ_FKo3G_Hwn2E1JQ</li>
+</ul>
+
+<p>人一胖就容易出现各种奇奇怪怪的问题，我睡觉的时候时不时就会憋醒，醒来后就会出现憋气后的大喘气，做了个检查，结论是轻度阻塞性睡眠呼吸暂停低通气综合征，过几天约一下报告上指定的教授看一下，估计还是减肥的事，以前血压高那医生也跟我说要减肥，不然问题大得很</p>
+
+<p>这个检查的设备很有意思，一个小盒子，上面接着三根管子，两根气管，一根是血氧夹，睡觉的时候把小盒子绑在肚皮上，然后两根气管就像医院ICU那样挂在鼻子上，测一晚上就行</p>
+
+<p>本周开心事儿，暗泉信息还注意到我了，是不是爬虫自动化发的？</p>
+
+<p><img src="/assets/resources/5DA81449BE9331A5EBA9CE04947F94EB.jpg" alt="IMAGE" /></p>
+
+<p>上次说的月初去上海休假还没去，工作上的事情耽误了</p>
+
+<p>运气不好的话得16号了，运气好的话，11号就可以去，美滋滋</p>
+
+<p>秋天到了，该回浙江吃海鲜啦</p>
+
+<p>周末愉快~</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2020/09/04/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.09.04.html';
+     this.page.identifier = '/2020/09/04/大土豆安全笔记 2020.09.04';
+     this.page.title = '大土豆安全笔记 2020.09.04 又双叒叕写了一个工具';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

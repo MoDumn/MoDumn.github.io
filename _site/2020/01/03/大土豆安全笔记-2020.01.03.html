@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>大土豆安全笔记 2020.01.03 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="大土豆安全笔记 2020.01.03" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="2020年的第一篇文章" />
+<meta property="og:description" content="2020年的第一篇文章" />
+<link rel="canonical" href="http://localhost:4000/2020/01/03/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.01.03.html" />
+<meta property="og:url" content="http://localhost:4000/2020/01/03/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.01.03.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-03T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="大土豆安全笔记 2020.01.03" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"大土豆安全笔记 2020.01.03","dateModified":"2020-01-03T20:40:00+08:00","@type":"BlogPosting","description":"2020年的第一篇文章","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/01/03/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.01.03.html"},"datePublished":"2020-01-03T20:40:00+08:00","url":"http://localhost:4000/2020/01/03/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.01.03.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">大土豆安全笔记 2020.01.03</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/security_daily/">security_daily</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 03 Jan 2020</div>
+  
+  <p>2020年的第一篇文章</p>
+
+<p>《浏览器安全周报》 -&gt; 《大土豆安全笔记》</p>
+
+<p>上周末开始了今年的36C3，我去年才知道这个会议，当时是泉哥在公众号推荐，然后就跟着学习了一波</p>
+<ul>
+  <li>https://fahrplan.events.ccc.de/congress/2019/Fahrplan/index.html</li>
+</ul>
+
+<p>我现在只学习了一个议题《Messenger Hacking - Remotely Compromising an iPhone over iMessage》，来自PJ0的Samuel Groß(@5aelo)，说起来大佬是真的是Nice，上周六早晨我睡的迷迷糊糊，刚拿起手机就看到大佬发推，又是Talk预告，又是slides公开的，看这架势，又是刷屏的节奏了，很厉害！</p>
+<ul>
+  <li>https://saelo.github.io/presentations/36c3_messenger_hacking.pdf</li>
+  <li>https://media.ccc.de/v/36c3-10497-messenger_hacking_remotely_compromising_an_iphone_through_imessage</li>
+</ul>
+
+<p>5aelo说有很多细节忽略了，但是之后会有更详细的文章版本，期待一下</p>
+
+<p><img src="/assets/resources/6FB1BF4932AC14D5697C912833E4A48D.jpg" alt="IMAGE" /></p>
+
+<p>我已经很久没有做过Android CTF题目了，从题解可以看出来还是比较中规中矩的题目</p>
+
+<p>CyberTruck Challenge 2019 — Android CTF</p>
+<ul>
+  <li>https://medium.com/bugbountywriteup/cybertruck-challenge-2019-android-ctf-e39c7f796530</li>
+</ul>
+
+<p>这段时间我在研究国内的字符串混淆和反混淆相关技术，有师傅给我推荐了烽火实验室开源的一款工具，这里做下记录，我还没有仔细分析细节，等分析完仔细讲讲</p>
+<ul>
+  <li>https://github.com/mikusjelly/dexsim</li>
+</ul>
+
+<p>很久之前看到的一个项目，我个人觉得这种项目其实是要好好利用起来的，我仔细的看了里面提到的所有Items，感慨我对于安卓安全领域还是了解的太少，有很多工具我都没听过，惭愧了:((，加入学习的计划里，目前我主要集中在静态分析这一块，我之前的很多想法，其实第一步就是静态分析，构建Graph，这个Graph不仅仅是CFG，总之我想要先把这一块掌握的比较清晰，尤其是接轨目前工业界的水平</p>
+<ul>
+  <li>https://github.com/ashishb/android-security-awesome</li>
+</ul>
+
+<p>还是勤劳致富啊</p>
+
+<hr />
+<p>layout: post
+title:  “大土豆安全笔记 2019.12.23 - 2019.12.27”
+date:   2019-12-27 18:00:00 +520
+tags: security_daily
+—</p>
+
+<p><img src="/assets/resources/876A021973D0E00FCCD40780BAD1FB0B.jpg" alt="IMAGE" /></p>
+
+<p>作为2020年的头一篇安全笔记，我对去年写的《浏览器安全周报》系列做了总结，去年逼自己学习有点逼的太狠了，看了很多文章，横向知识的扩展还是可以的，但是真正深入学习的却不多，今年开始要对每份资料都学习的更仔细，我要求自己文章里提到的任何一份资料我都仔细学习过，这样的分享才是负责任的</p>
+
+<p>最后让我们来看个搞笑的：问了下师傅，据说是一个很低级的漏洞，标题写的贼唬人，2333333333333333</p>
+
+<p>Tencent WeChat name Command Injection Remote Code Execution Vulnerability</p>
+<ul>
+  <li>https://www.zerodayinitiative.com/advisories/ZDI-19-1035/</li>
+</ul>
+
+<p><img src="/assets/resources/89737A9F0004866BCF454DCFF77113F2.jpg" alt="IMAGE" /></p>
+
+<p>但是话又说回来，我们仔细看一下描述：</p>
+<blockquote>
+  <p>The specific flaw exists within the parsing of a usernames. The issue results from the lack of proper validation of a user-supplied string before using it to execute a system call. An attacker can leverage this vulnerability to execute code in the context of the current process.</p>
+</blockquote>
+
+<p>解析用户名的时候，未经校验传入了SystemCall，结合我上面要做的，我们把所有系统调用找到，反推参数传递路径，或许能有些意想不到的收获</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2020/01/03/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.01.03.html';
+     this.page.identifier = '/2020/01/03/大土豆安全笔记 2020.01.03';
+     this.page.title = '大土豆安全笔记 2020.01.03';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

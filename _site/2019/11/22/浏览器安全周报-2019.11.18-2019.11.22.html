@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>浏览器安全周报 2019.11.18 - 2019.11.22 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="浏览器安全周报 2019.11.18 - 2019.11.22" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="上周的周报最后面说接下来学习下TrustZone，前几天有一篇高通芯片漏洞的文章 https://research.checkpoint.com/the-road-to-qualcomm-trustzone-apps-fuzzing/" />
+<meta property="og:description" content="上周的周报最后面说接下来学习下TrustZone，前几天有一篇高通芯片漏洞的文章 https://research.checkpoint.com/the-road-to-qualcomm-trustzone-apps-fuzzing/" />
+<link rel="canonical" href="http://localhost:4000/2019/11/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.18-2019.11.22.html" />
+<meta property="og:url" content="http://localhost:4000/2019/11/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.18-2019.11.22.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-22T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="浏览器安全周报 2019.11.18 - 2019.11.22" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"浏览器安全周报 2019.11.18 - 2019.11.22","dateModified":"2019-11-22T20:40:00+08:00","@type":"BlogPosting","description":"上周的周报最后面说接下来学习下TrustZone，前几天有一篇高通芯片漏洞的文章 https://research.checkpoint.com/the-road-to-qualcomm-trustzone-apps-fuzzing/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/11/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.18-2019.11.22.html"},"datePublished":"2019-11-22T20:40:00+08:00","url":"http://localhost:4000/2019/11/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.18-2019.11.22.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">浏览器安全周报 2019.11.18 - 2019.11.22</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/browser_security/">browser_security</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 22 Nov 2019</div>
+  
+  <p>上周的周报最后面说接下来学习下TrustZone，前几天有一篇高通芯片漏洞的文章</p>
+<ul>
+  <li>https://research.checkpoint.com/the-road-to-qualcomm-trustzone-apps-fuzzing/</li>
+</ul>
+
+<p>其实今年六月份作者就已经作过相关的分享《The road to Qualcomm TrustZone apps fuzzing by Slava Makkaveev》</p>
+<ul>
+  <li>https://cfp.recon.cx/media/tz_apps_fuzz.pdf</li>
+</ul>
+
+<p>大概的意思就是：通过一系列漏洞对存在漏洞的TA进行Patch，使其计算的数据能够返回给REE，这样就可以曲线救国在REE侧对TEE进行Fuzz，更加具体的操作细节我还在跟李神探学习，希望之后能够单独写一系列文章讲讲TrustZone相关的漏洞分析及安全防护技术</p>
+
+<p><img src="/assets/resources/AA7B10AB696D934E8922D3B226841B43.jpg" alt="IMAGE" /></p>
+
+<p><img src="/assets/resources/F1158249EDD0B566E40780C161CB329C.jpg" alt="IMAGE" /></p>
+
+<p>这个会议所有的议题Slide可以在这下载</p>
+<ul>
+  <li>https://cfp.recon.cx/reconmtl2019/talk/</li>
+</ul>
+
+<p>2019 POC关于Safari的议题，来自Blade Team</p>
+<ul>
+  <li>http://powerofcommunity.net/poc2019/Zhiyang.pdf</li>
+</ul>
+
+<p>哈喽，ChakraCore:))</p>
+
+<p>现在学习浏览器的环境真好，随处都是资料</p>
+
+<p>官方文档</p>
+<ul>
+  <li>https://github.com/Microsoft/ChakraCore/wiki/Architecture-Overview</li>
+</ul>
+
+<p>有两个很不错的议题</p>
+
+<p>Using the JIT vulnerability to Pwning Microsoft Edge</p>
+<ul>
+  <li>https://i.blackhat.com/asia-19/Fri-March-29/bh-asia-Li-Using-the-JIT-Vulnerability-to-Pwning-Microsoft-Edge.pdf</li>
+</ul>
+
+<p>Attacking Edge Through the JavaScript Just-In-Time Compiler</p>
+<ul>
+  <li>https://github.com/bkth/Attacking-Edge-Through-the-JavaScript-Compiler/blob/master/pres.pdf</li>
+  <li>https://www.youtube.com/watch?v=r4J7Zu1RV40</li>
+  <li>https://www.youtube.com/watch?v=lBL4KGIybWE</li>
+</ul>
+
+<p>下面的文章我现在是打印出来每天上下班地铁上读，来回快两小时不用起来怪可惜的，然后睡前再看个半小时，感谢我司免费打印！</p>
+
+<p>0x9A82 - Edge Type Confusion利用：从type confused到内存读写</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/98774</li>
+</ul>
+
+<p>0x9A82 - Edge Type Confusion利用：从内存读写到控制流程</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/98775</li>
+</ul>
+
+<p>0x9A82 - 对Edge浏览器的js解析引擎Chakra漏洞CVE-2017-8548的分析</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/87322</li>
+</ul>
+
+<p>zs0zrc - CVE-2018-8372</p>
+<ul>
+  <li>https://zszcr.github.io/2019/06/01/2019-6-1-CVE-2018-8372/</li>
+</ul>
+
+<p>zs0zrc - ChakraCore基础知识笔记</p>
+<ul>
+  <li>https://zszcr.github.io/2019/05/28/2019-5-28-ChakraCore%E5%9F%BA%E7%A1%80/</li>
+</ul>
+
+<p>walkerfuz - 从CVE-2018-8355零基础学Chakracore漏洞利用</p>
+<ul>
+  <li>https://www.codercto.com/a/85300.html</li>
+</ul>
+
+<p>sakura - case study:cve-2017-0234</p>
+<ul>
+  <li>http://eternalsakura13.com/2018/07/03/cve-2017-0234-3.0/</li>
+</ul>
+
+<p>elli0tn0phacker - Chakra漏洞调试笔记1 - ImplicitCall</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/180551</li>
+</ul>
+
+<p>elli0tn0phacker - Chakra漏洞调试笔记2 - OpCode Side Effect</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/183127</li>
+</ul>
+
+<p>elli0tn0phacker - Chakra漏洞调试笔记3 - MissingValue</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/184258</li>
+</ul>
+
+<p>elli0tn0phacker - Chakra漏洞调试笔记4 - Array OOB</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/187739</li>
+</ul>
+
+<p>elli0tn0phacker - Chakra漏洞调试笔记5 - CVE-2019-0861复现</p>
+<ul>
+  <li>https://www.anquanke.com/post/id/190533</li>
+</ul>
+
+<p>今年Bluehat百度安全实验室关于挖掘Windows内核信息泄露的分享《如何在3个月发现12个内核信息泄露漏洞》，以下一个是视频，一个是Slide</p>
+<ul>
+  <li>https://www.microsoft.com/en-us/videoplayer/embed/RE3i0iZ</li>
+  <li>https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE37dLj</li>
+</ul>
+
+<p>IDA最近的更新都让人很想买新的Release啊，不知道啥时候能有Leak，话说有段时间没有新的Leak了，师傅们给我来一份？</p>
+
+<p>关于使用新的接口来实现反混淆《Hex-Rays Microcode API vs. Obfuscating Compiler》，这个很强大，平时逆向协议比较多的同学可以重点关注</p>
+<ul>
+  <li>http://www.hexblog.com/?p=1248</li>
+</ul>
+
+<p>再次读泉哥的《安全研究者的自我修养》，常看常新，能够反思自己这段时间是否按照过来人的建议去学习，改正没有做好的地方</p>
+<ul>
+  <li>https://mp.weixin.qq.com/s?__biz=MzU0MzgzNTU0Mw==&amp;mid=2247483913&amp;idx=1&amp;sn=2a0558592e072389e348dc8f7c6223d1&amp;scene=21#wechat_redirect</li>
+</ul>
+
+<p>第七条尤其有感触：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7、进入研究者团队或社区，互相学习
+国外的交流氛围会比国内的更好一些，也更愿意分享。
+很多时候自己的交流圈，大多是一些熟识的同行，或者同事，一般可交流的人还是比较少的。
+经常在网上看到不少人会问，如何认识xx大牛、黑客，但其实很多时候却是：努力提高自己的专业能力，圈子最终会吸纳你进去认识更多圈内人。
+</code></pre></div></div>
+
+<p>我现在的技术还是太弱了，不够专注，学习的效率也不够高，希望能通过不断的学习来改进</p>
+
+<p>16寸的MacBook Pro，买不起的我只能YY一下</p>
+
+<p><img src="/assets/resources/EF2E6F1E686160CF6DBBF0EA16FC2A64.jpg" alt="IMAGE" /></p>
+
+<p>最后，下个月就是圣诞节了，不知道给女朋友买什么圣诞礼物的，我这里有个建议：圣诞日历，有护肤，香氛，美妆，玩具，零食等多种类型，圣诞日历有24个格子，每个格子里面有这一家品牌自家这一年卖得比较好或者当家明星产品，不过一般都是Full Size和Travel Size组合，然后每天拆一个格子，就可以拆到平安夜，这个点不少品牌的日历都抢完了，可以去淘宝找代购或者海淘，老外真会玩</p>
+
+<p>话说我每次安全周报都写这么多东西，搞的好像每天上班我都在学习不干活一样，是不是酌情写一两句就好了:((</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2019/11/22/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E5%91%A8%E6%8A%A5-2019.11.18-2019.11.22.html';
+     this.page.identifier = '/2019/11/22/浏览器安全周报 2019.11.18 - 2019.11.22';
+     this.page.title = '浏览器安全周报 2019.11.18 - 2019.11.22';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

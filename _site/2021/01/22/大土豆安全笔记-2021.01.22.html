@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>大土豆安全笔记 2021.01.22 在线求团购*OS Internals III | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="大土豆安全笔记 2021.01.22 在线求团购*OS Internals III" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="接下来到年前应该都是在学习漏洞CVE-2019-8605 https://bugs.chromium.org/p/project-zero/issues/detail?id=1806" />
+<meta property="og:description" content="接下来到年前应该都是在学习漏洞CVE-2019-8605 https://bugs.chromium.org/p/project-zero/issues/detail?id=1806" />
+<link rel="canonical" href="http://localhost:4000/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html" />
+<meta property="og:url" content="http://localhost:4000/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-22T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="大土豆安全笔记 2021.01.22 在线求团购*OS Internals III" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"大土豆安全笔记 2021.01.22 在线求团购*OS Internals III","dateModified":"2021-01-22T20:40:00+08:00","@type":"BlogPosting","description":"接下来到年前应该都是在学习漏洞CVE-2019-8605 https://bugs.chromium.org/p/project-zero/issues/detail?id=1806","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html"},"datePublished":"2021-01-22T20:40:00+08:00","url":"http://localhost:4000/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">大土豆安全笔记 2021.01.22 在线求团购*OS Internals III</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/security_daily/">security_daily</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 22 Jan 2021</div>
+  
+  <p>接下来到年前应该都是在学习漏洞CVE-2019-8605</p>
+<ul>
+  <li>https://bugs.chromium.org/p/project-zero/issues/detail?id=1806</li>
+</ul>
+
+<p>两篇相关的文章，不得不说，PJ0的人写的文章就是棒！</p>
+<ul>
+  <li>https://googleprojectzero.blogspot.com/2019/12/sockpuppet-walkthrough-of-kernel.html</li>
+  <li>https://jsherman212.github.io/used_sock/</li>
+</ul>
+
+<p>这个漏洞源于调用函数<code class="language-plaintext highlighter-rouge">disconnectx()</code>后，在对<code class="language-plaintext highlighter-rouge">inp-&gt;in6p_outputopts</code>进行释放操作时，没有将其置为空，导致的一个释放后重用漏洞</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ip6_freepcbopts(inp-&gt;in6p_outputopts);
+</code></pre></div></div>
+
+<p>这里的调用路径上有一个CHECK需要绕过</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define	SS_CANTRCVMORE		0x0020	/* can't receive more data from peer */
+#define	SS_CANTSENDMORE		0x0010	/* can't send more data to peer */
+#define	SOF_NPX_SETOPTSHUT	0x00002000 /* Non POSIX extension to allow
+
+int
+sosetoptlock(struct socket *so, struct sockopt *sopt, int dolock)
+{
+	...
+
+	if ((so-&gt;so_state &amp; (SS_CANTRCVMORE | SS_CANTSENDMORE)) ==
+	    (SS_CANTRCVMORE | SS_CANTSENDMORE) &amp;&amp;
+	    (so-&gt;so_flags &amp; SOF_NPX_SETOPTSHUT) == 0) {
+		/* the socket has been shutdown, no more sockopt's */
+		error = EINVAL;
+		goto out;
+	}
+	...
+</code></pre></div></div>
+
+<p>理解一下这个检查，左边<code class="language-plaintext highlighter-rouge">so-&gt;so_state</code>只能是<code class="language-plaintext highlighter-rouge">SS_CANTRCVMORE</code>与<code class="language-plaintext highlighter-rouge">SS_CANTSENDMORE</code>之间任意一种且右边<code class="language-plaintext highlighter-rouge">so-&gt;so_flags</code>不能是<code class="language-plaintext highlighter-rouge">SOF_NPX_SETOPTSHUT</code>，就会跳到<code class="language-plaintext highlighter-rouge">goto out</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(so-&gt;so_state &amp; (SS_CANTRCVMORE | SS_CANTSENDMORE)) == (SS_CANTRCVMORE | SS_CANTSENDMORE) 
+&amp;&amp; (so-&gt;so_flags &amp; SOF_NPX_SETOPTSHUT) == 0
+</code></pre></div></div>
+
+<p>但是天无绝人之路，看下面这个宏，允许在关闭Socket之后使用函数<code class="language-plaintext highlighter-rouge">setsockopt</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define	SONPX_SETOPTSHUT	0x000000001	/* flag for allowing setsockopt after shutdown */
+</code></pre></div></div>
+
+<p>找到这个宏的使用场景，发现是在<code class="language-plaintext highlighter-rouge">level</code>为<code class="language-plaintext highlighter-rouge">SOL_SOCKET</code>的分支里，当满足<code class="language-plaintext highlighter-rouge">sonpx.npx_mask</code>和<code class="language-plaintext highlighter-rouge">sonpx.npx_flags</code>都为<code class="language-plaintext highlighter-rouge">SONPX_SETOPTSHUT</code>时，就会给<code class="language-plaintext highlighter-rouge">so-&gt;so_flags</code>添加<code class="language-plaintext highlighter-rouge">SOF_NPX_SETOPTSHUT</code>标志位</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int
+sosetoptlock(struct socket *so, struct sockopt *sopt, int dolock)
+{
+	...
+	if (sopt-&gt;sopt_level != SOL_SOCKET) {
+		...
+	} else {
+		...
+		switch (sopt-&gt;sopt_name) {
+		...
+		case SO_NP_EXTENSIONS: {
+			struct so_np_extensions sonpx;
+
+			error = sooptcopyin(sopt, &amp;sonpx, sizeof (sonpx),
+			    sizeof (sonpx));
+			if (error != 0)
+				goto out;
+			if (sonpx.npx_mask &amp; ~SONPX_MASK_VALID) {
+				error = EINVAL;
+				goto out;
+			}
+			/*
+			 * Only one bit defined for now
+			 */
+			if ((sonpx.npx_mask &amp; SONPX_SETOPTSHUT)) {
+				if ((sonpx.npx_flags &amp; SONPX_SETOPTSHUT))
+					so-&gt;so_flags |= SOF_NPX_SETOPTSHUT;    // 添加标志位
+				else
+					so-&gt;so_flags &amp;= ~SOF_NPX_SETOPTSHUT;
+			}
+			break;
+		}
+</code></pre></div></div>
+
+<p>当<code class="language-plaintext highlighter-rouge">so-&gt;so_flags</code>拥有<code class="language-plaintext highlighter-rouge">SOF_NPX_SETOPTSHUT</code>标志位，那么右边的检查就不能成立，成功绕过</p>
+
+<p>之后Socket就可以顺利的在关闭后调用函数<code class="language-plaintext highlighter-rouge">setsockopt()</code>了</p>
+
+<p>我们知道UAF漏洞的一个技巧是利用内存分配来占用被释放的空间，那填充这个空间的技术也是比较讲究的</p>
+
+<p>函数<code class="language-plaintext highlighter-rouge">ipc_kmsg_copyin_ool_ports_descriptor()</code>专门用于处理<code class="language-plaintext highlighter-rouge">MACH_MSG_OOL_PORTS_DESCRIPTOR</code>，使用<code class="language-plaintext highlighter-rouge">MACH_MSG_OOL_PORTS_DESCRIPTOR</code>可以在消息中传输大量的Port</p>
+
+<p>在层层往下调用后，会调用函数<code class="language-plaintext highlighter-rouge">ipc_entry_lookup()</code>，该函数会在<code class="language-plaintext highlighter-rouge">is_table</code>数组内搜索对应<code class="language-plaintext highlighter-rouge">name</code>的<code class="language-plaintext highlighter-rouge">ipc_entry</code>，我们可以从这个<code class="language-plaintext highlighter-rouge">ipc_entry</code>获取传入用户态Port的真实内核态对象</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ipc_entry_t
+ipc_entry_lookup(
+	ipc_space_t		space,
+	mach_port_name_t	name)
+{
+	mach_port_index_t index;
+	ipc_entry_t entry;
+	index = MACH_PORT_INDEX(name);
+	if (index &lt;  space-&gt;is_table_size) {
+                entry = &amp;space-&gt;is_table[index];
+		...
+	}
+
+	return entry;
+}
+</code></pre></div></div>
+
+<p>层层往回走，函数<code class="language-plaintext highlighter-rouge">ipc_object_copyin()</code>的参数<code class="language-plaintext highlighter-rouge">objectp</code>会被存储到Caller函数<code class="language-plaintext highlighter-rouge">ipc_kmsg_copyin_ool_ports_descriptor()</code>的<code class="language-plaintext highlighter-rouge">objects[]</code>数组里</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for ( i = 0; i &lt; count; i++) {
+    mach_port_name_t name = names[i];
+    ipc_object_t object;
+    if (!MACH_PORT_VALID(name)) {
+        objects[i] = (ipc_object_t)CAST_MACH_NAME_TO_PORT(name);
+        continue;
+    }
+    kern_return_t kr = ipc_object_copyin(space, name, user_disp, &amp;object);
+    objects[i] = object;
+}
+</code></pre></div></div>
+
+<p>数组<code class="language-plaintext highlighter-rouge">objects[]</code>在函数<code class="language-plaintext highlighter-rouge">ipc_kmsg_copyin_ool_ports_descriptor</code>进行内存空间分配，所以我们只要让<code class="language-plaintext highlighter-rouge">ports_length</code>等于<code class="language-plaintext highlighter-rouge">inp-&gt;in6p_outputopts</code>的大小，就可以让它分配到我们释放掉的空间里</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data = kalloc(ports_length);
+objects = (ipc_object_t *) data;
+</code></pre></div></div>
+
+<p>还有填充之后，如何构造所需原语，这些都需要我再仔细学习研究</p>
+
+<p>有很多的细节真的还是要看《Mac OS X技术内幕》这本书，其它地方完全搜不到</p>
+
+<p>上次说的卷三可能要等之后团购了，大佬们要是有渠道一定喊我一下，最好有优惠的价格那种，我比较穷</p>
+
+<p>要是有大佬不玩了，可以二手卖我</p>
+
+<p>《Exploiting CVE-2020-15994 Chrome WebAssembly Engine UAF Vulnerability》，浏览器要跟起来了，毕竟是要浏览器打到内核</p>
+<ul>
+  <li>https://blog.br0vvnn.io/pages/blogpost.aspx?id=5</li>
+</ul>
+
+<p>Flanker的分享《<a href="https://mp.weixin.qq.com/s/G26MJOH4VPene1Sd_zjEQw">Fuzzing战争系列之二：不畏浮云遮望眼</a>》，我底子差，认真看了个乐，师傅们看懂了教我</p>
+<ul>
+  <li>https://speakerdeck.com/flankerhqd/blowing-the-cover-of-android-binary-fuzzing</li>
+</ul>
+
+<p>我计划在农历年前或者年后组织一波技术分享，线上视频会议模式</p>
+
+<p>人数不会很多，大概三到五个人，所有参与者都需要准备分享议题，分享前一周提供完整版文章与Slides，所有参与者都要提前阅读其他分享者的文章并准备要提问的问题</p>
+
+<p>吃瓜时间，这个我不知道真假，只是道听途说的，本分厂的瓜就吃到这</p>
+
+<p><img src="/assets/resources/96E7D8BECD5C7988EEC7B7C5D4A326EA.jpg" alt="IMAGE" /></p>
+
+<p>到钟了，老板们周末愉快~</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html';
+     this.page.identifier = '/2021/01/22/大土豆安全笔记 2021.01.22';
+     this.page.title = '大土豆安全笔记 2021.01.22 在线求团购*OS Internals III';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/12/31/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.12.31.html">
+            大土豆安全笔记 2020.12.31 征途漫漫，惟有奋斗！
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

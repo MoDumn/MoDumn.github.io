@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>大土豆安全笔记 2020.03.30 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="大土豆安全笔记 2020.03.30" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="希望变的和F-Secure Labs一样能打" />
+<meta property="og:description" content="希望变的和F-Secure Labs一样能打" />
+<link rel="canonical" href="http://localhost:4000/2020/03/30/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.30.html" />
+<meta property="og:url" content="http://localhost:4000/2020/03/30/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.30.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-30T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="大土豆安全笔记 2020.03.30" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"大土豆安全笔记 2020.03.30","dateModified":"2020-03-30T20:40:00+08:00","@type":"BlogPosting","description":"希望变的和F-Secure Labs一样能打","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/03/30/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.30.html"},"datePublished":"2020-03-30T20:40:00+08:00","url":"http://localhost:4000/2020/03/30/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.30.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">大土豆安全笔记 2020.03.30</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/security_daily/">security_daily</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 30 Mar 2020</div>
+  
+  <p><strong>希望变的和F-Secure Labs一样能打</strong></p>
+
+<p>搞移动端应用审计也有段时间了，除了常规的漏洞之外，我更喜欢逻辑漏洞，逻辑漏洞比较依赖梳理代码，比如最常见的就是导出组件，通过发送Intent去调用它，传入数据，能利用到什么程度就看后续的代码都做了哪些工作，比如我传入一个字段<code class="language-plaintext highlighter-rouge">"url"</code>，后续直接将这个字段的值进行<code class="language-plaintext highlighter-rouge">loadUrl()</code>，而且这种漏洞如果存在于系统应用，则可以进行全局的逻辑分析</p>
+
+<p>F-Secure Labs是我最喜欢的安全团队之一，每篇文章都是实打实的干货，贼能打！</p>
+
+<p>他们曾经公开分享过如何用十一个逻辑漏洞攻破Samsung S8，相当Nice</p>
+<ul>
+  <li>https://labs.f-secure.com/assets/BlogFiles/G.-Geshev-and-Rob-Miller-Chainspotting.pdf</li>
+</ul>
+
+<p>这个Slides我不止一次在文章里提过，我也跟着分析过，说真的，完全是可以自动化发现的</p>
+
+<p>我周末的时候在看即时通讯APP的开发，依旧是两倍速，快速的看了些关键的地方，比如是选择Socket还是XMPP，服务端框架，常见的XMPP客户端，常见的第三方SDK解决方案，还有零零散散的一些其它关于即时通讯的开发教程，总的来说目前是对于即时通讯这部分有了一个初步的认识</p>
+
+<p>之所以看IM应用是因为我要补全自己对于业务交互数据处理方面的审计能力，像IM应用就是极其合适的一种应用，IM应用的语音模块，视频模块刚好满足我的要求</p>
+
+<p>这小半年出了一些关于这种通讯类应用的研究成果，向PJ0和盘古的大佬们学习！</p>
+
+<p>微信的内存破坏漏洞，来自PJ0的女黑客Natashenka，有幸现场看过大佬的演讲，怎么说呢，大佬比照片上看起来更结实一些，果然越强壮技术越强</p>
+<ul>
+  <li>https://bugs.chromium.org/p/project-zero/issues/detail?id=1948</li>
+</ul>
+
+<p>按照漏洞报告时间来看的话，Natashenka分析的版本应该是v7.0.*，通过对不同版本的对比以及Crash日志的偏移，可以判断是v7.0.5</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#00  pc 0x1d84  /system/lib/libc.so (memcpy+4294873188)
+#01  pc 0x1219ff  /data/app/com.tencent.mm-TQNkaubz5b3G-b5myc_RkA==/lib/arm/libvoipCodec.so 
+(CAudioJBM::InputAudioFrameToJBM(unsigned char*, int, unsigned int, unsigned short, int, int, int)+2298)
+</code></pre></div></div>
+
+<p><img src="/assets/resources/044D757D9368EA6159B7EA8F037775E6.jpg" alt="IMAGE" /></p>
+
+<p>V7.0.6计算出来的位置如下，明显不符合</p>
+
+<p><img src="/assets/resources/CB1F07420893222F274ABD2428301DF2.jpg" alt="IMAGE" /></p>
+
+<p>我就是简单看了下，可能计算的不对，接下来再仔细研究学习，网络上分析微信协议啥的文章很多，都看一遍找找感觉，没搞过微信的我心慌慌，万一干不过再把号给整没了:(</p>
+
+<p>微信这个漏洞我暂时不想硬上去分析，在写脚本辅助分析梳理流程，Frida是我们共同的好朋友:)</p>
+
+<p>目前我对于这部分是梳理出了一些研究思路，在没有研究成果之前也不好在这里瞎吹，有产出我就写篇文章自吹一下，要是没产出我就当没搞过这玩意，今天就这样吧</p>
+
+<p>最后：挖到了漏洞有点小成果不要在我这里刷优越感，我可是会拉黑人的:)</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2020/03/30/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2020.03.30.html';
+     this.page.identifier = '/2020/03/30/大土豆安全笔记 2020.03.30';
+     this.page.title = '大土豆安全笔记 2020.03.30';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>2016 LCTF - easyeasy-200 | wnagzihxa1n’s blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="2016 LCTF - easyeasy-200" />
+<meta name="author" content="wnagzihxa1n" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="2016年LCTF的第二道Mobile题，分值200，有言在先，本百分之九十九靠着自己多年酱油选手的灵感" />
+<meta property="og:description" content="2016年LCTF的第二道Mobile题，分值200，有言在先，本百分之九十九靠着自己多年酱油选手的灵感" />
+<link rel="canonical" href="http://localhost:4000/2017/03/18/2016-LCTF-easyeasy-200.html" />
+<meta property="og:url" content="http://localhost:4000/2017/03/18/2016-LCTF-easyeasy-200.html" />
+<meta property="og:site_name" content="wnagzihxa1n’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-03-18T20:40:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="2016 LCTF - easyeasy-200" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"wnagzihxa1n"},"headline":"2016 LCTF - easyeasy-200","dateModified":"2017-03-18T20:40:00+08:00","@type":"BlogPosting","description":"2016年LCTF的第二道Mobile题，分值200，有言在先，本百分之九十九靠着自己多年酱油选手的灵感","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2017/03/18/2016-LCTF-easyeasy-200.html"},"datePublished":"2017-03-18T20:40:00+08:00","url":"http://localhost:4000/2017/03/18/2016-LCTF-easyeasy-200.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="wnagzihxa1n's blog" /></head>
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">wnagzihxa1n&#39;s blog<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <span class="social_links">
+        <a class="color-cyan-hover" href="https://twitter.com/wnagzihxa1n"><i class="fab fa-twitter-square"></i></a><a class="color-purple-hover" href="https://github.com/wnagzihxa1n"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+    
+    <!-- 
+        <img src="/assets/HeadIcon.jpg" class="author-avatar" alt="Avatar" />
+     -->
+I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">2016 LCTF - easyeasy-200</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/android_ctf/">android_ctf</a>
+      
+  </div>
+  
+  <div class="post-date">Published on 18 Mar 2017</div>
+  
+  <p>2016年LCTF的第二道Mobile题，分值200，有言在先，本百分之九十九靠着自己多年酱油选手的灵感</p>
+
+<p>Jadx载入样本，先判断了输入字符串的长度，然后对字符串进行处理，最后调用函数进行校验</p>
+
+<p><img src="/assets/resources/D7929F9A772913A9A5C7BC4323315E20.png" alt="1.png" /></p>
+
+<p>调用<code class="language-plaintext highlighter-rouge">Format类</code>的函数进行处理，这里写了这么多个，肯定在后面会用到，不然出题人吃饱撑着写这么多</p>
+
+<p><img src="/assets/resources/B9BACA287C5607274E12EBC3646CC73F.png" alt="2.png" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">check()</code>函数里显示检测了模拟器，所以直接运行在真机上，然后调用native函数进行校验</p>
+
+<p><img src="/assets/resources/B671016B48EC4E567CC9873AB788B104.png" alt="3.png" /></p>
+
+<p>IDA载入so，先看<code class="language-plaintext highlighter-rouge">checkEmulator()</code>函数，这个函数并没有做其它操作，只是根据传入的值返回</p>
+
+<p><img src="/assets/resources/17E19CB1737E8290A924B2C36AEB298E.png" alt="4.png" /></p>
+
+<p>同时，我们看到还有一个<code class="language-plaintext highlighter-rouge">checkPasswd()</code>函数</p>
+
+<p>我们进行简单的分析，可以看出来中间用到了某种加密操作</p>
+
+<p><img src="/assets/resources/BD021A61E412E73104873CFDF93410CB.png" alt="5.png" /></p>
+
+<p>在对整个校验函数有了简单的认识后，进行深入分析</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sub_91C0(&amp;v23, &amp;unk_19D7F, &amp;v22);
+sub_7118(&amp;v23, input_chars_new, num_33);
+sub_8740(*v21 - 12);
+sub_8740(v23 - 12);
+</code></pre></div></div>
+
+<p>在翻了几下之后，发现这几个函数并没有太大关系，我们需要关注的是</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>j_j_j__Z7encryptPKcj(v20, v22, *(v22 - 12));
+</code></pre></div></div>
+
+<p>找到<code class="language-plaintext highlighter-rouge">v22 - 12</code>的定义就是<code class="language-plaintext highlighter-rouge">vInput_</code>，v20在后面会有操作，所以应该是输出</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-00000028 vInput_         DCD ?
+-00000024 var_24          DCB 4 dup(?)
+-00000020 var_20          DCB ?
+-0000001F                 DCB ? ; undefined
+-0000001E                 DCB ? ; undefined
+-0000001D                 DCB ? ; undefined
+-0000001C var_1C 
+</code></pre></div></div>
+
+<p>跟进去</p>
+
+<p><img src="/assets/resources/1C5C70F2313FAD8DE98F3FBEAF94B2D8.png" alt="6.png" /></p>
+
+<p>这明显的Base64算法，那么分析到这里就可以回去了</p>
+
+<p>最后的对比</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>v14 = *v20;
+v15 = sub_7B10(&amp;secret, v14);
+</code></pre></div></div>
+
+<p>这里调用<code class="language-plaintext highlighter-rouge">sub_7B10</code>，可以跟进去</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int __fastcall sub_7B10(const void **a1, const char *a2)
+{
+    const void *v2; // r7@1
+    const char *v3; // r6@1
+    size_t v4; // r5@1
+    size_t v5; // r4@1
+    size_t v6; // r2@1
+    int result; // r0@3
+
+    v2 = *a1;
+    v3 = a2;
+    v4 = *(*a1 - 3);
+    v5 = j_j_strlen(a2);
+    v6 = v5;
+    if ( v5 &gt; v4 )
+        v6 = v4;
+    result = j_j_memcmp(v2, v3, v6);
+    if ( !result )
+        result = v4 - v5;
+    return result;
+}
+</code></pre></div></div>
+
+<p>调用<code class="language-plaintext highlighter-rouge">memcpy()</code>函数进行对比，那么现在关键的就是<code class="language-plaintext highlighter-rouge">secret</code></p>
+
+<p>使用交叉引用，找到一处对<code class="language-plaintext highlighter-rouge">secret</code>的调用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int sub_4C54()
+{
+    int result; // r0@1
+    int v1; // [sp+0h] [bp-18h]@1
+    char v2; // [sp+4h] [bp-14h]@1
+    int v3; // [sp+8h] [bp-10h]@1
+
+    v3 = _stack_chk_guard;
+    My_create(&amp;secret, "dHR0dGlldmFodG5vZGllc3VhY2VibGxlaHNhdG5hd2k.", &amp;v1);
+    j_j___cxa_atexit(sub_6BE4, &amp;secret, &amp;unk_1E000);
+    My_create(&amp;dword_1E09C, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", &amp;v2);
+    j_j___cxa_atexit(sub_6BE4, &amp;dword_1E09C, &amp;unk_1E000);
+    result = _stack_chk_guard - v3;
+    if ( _stack_chk_guard != v3 )
+      j_j___stack_chk_fail();
+    return result;
+}
+</code></pre></div></div>
+
+<p>从第二个字符串来看，这是Base64算法无误了</p>
+
+<p>那么分析到这，我们可以逆推一下，首先将<code class="language-plaintext highlighter-rouge">dHR0dGlldmFodG5vZGllc3VhY2VibGxlaHNhdG5hd2k.</code>用Base64还原，然后倒序</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; temp = "ttttievahtnodiesuacebllehsatnawi!"
+&gt;&gt;&gt; temp[::-1]
+'!iwantashellbecauseidonthaveitttt'
+</code></pre></div></div>
+
+<p>鉴于没有参赛我也不知道Flag到底是什么</p>
+
+<p>网上流传的Flag：iwantashellbecauseidonthaveitttt</p>
+
+<p>可是我记得前面是有调用一个<code class="language-plaintext highlighter-rouge">Format</code>类的一个函数做<code class="language-plaintext highlighter-rouge">substring()</code>操作	，应该是补上固定长度的任意字符串</p>
+
+<p>不过还有一点点其它的东西可以跟大家聊一聊</p>
+
+<p>我们注意到</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; temp = "iwantashellbecauseidonthaveitttt"
+&gt;&gt;&gt; print len(temp)
+32
+</code></pre></div></div>
+
+<p>而我们Java层传进来的字符串应该是33位，再来翻so文件，蓦然发现有一个<code class="language-plaintext highlighter-rouge">JNI_OnLoad()</code>函数</p>
+
+<p><img src="/assets/resources/33D397BEE09213CCCC91EBD701047CD3.png" alt="7.png" /></p>
+
+<p>粗略一看，这里面的东西还是很多的，先是做初始化，猜测这里是要获取dex文件</p>
+
+<p><img src="/assets/resources/69EA190E3646DA05E4BDF00AB796B149.png" alt="8.png" /></p>
+
+<p>通过<code class="language-plaintext highlighter-rouge">/proc/self/maps</code>找dex文件</p>
+
+<p><img src="/assets/resources/620241D4E9DC523CE68E049B3668B82F.png" alt="9.png" /></p>
+
+<p>寻找dex的Magic Number</p>
+
+<p><img src="/assets/resources/EB8D6B6D08A540A574F04A6D7E5C1D5C.png" alt="10.png" /></p>
+
+<p>接下来看到了比较关键的代码，这通常用于Dex文件自篡改，一大堆乱七八糟的东西没看懂是啥</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(v91)
+{
+    if(!j_j_mprotect(v75, v71, 7))
+    {
+        *v86 = *filenamed;
+        v92 = *(filenamed + 3);
+        if (v92)
+        {
+            v93 = filenamed + 16;
+            v94 = v86 + 8;
+            do
+            {
+                *v94 = *v93;
+                ++v93;
+                ++v94;
+                --v92;
+            }while(v92);
+        }
+        j_j_mprotect(v75, v71, 5);
+    }
+}
+</code></pre></div></div>
+
+<p>这时候开始瞎猜，一定有篡改，而且截取的长度由33变成32，获取的是<code class="language-plaintext highlighter-rouge">Lcom/example/ring/wantashell/Format;</code>类</p>
+
+<p>再回头看该类的四个函数，主办方还是很仁慈的，并没有换三个长度都是32的函数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Format {
+    protected String form(String input) {
+        return input.substring(5, 38);
+    }
+
+    protected String fo1m(String input) {
+        return input.substring(5, 36);
+    }
+
+    protected String forn(String input) {
+        return input.substring(5, 39);
+    }
+
+    protected String f0rm(String input) {
+        return input.substring(5, 37);
+    }
+}
+</code></pre></div></div>
+
+<p>大胆的猜测这里是将<code class="language-plaintext highlighter-rouge">form()</code>自篡改成<code class="language-plaintext highlighter-rouge">f0rm()</code></p>
+
+<p>那么现在Flag是<code class="language-plaintext highlighter-rouge">iwantashellbecauseidonthaveitttt</code>就没什么问题了</p>
+
+<p>至于反调试，可以直接patch so的调用反调试函数指令，也可以动态调试的时候下断点，patch一下内存</p>
+
+<p>如果有同学感觉好的，在看<code class="language-plaintext highlighter-rouge">secret</code>赋值那里，就应该猜到这是Base64算法，感觉再好一点的，直接就解出了Flag</p>
+
+<p>今天2017 Pwn2Own结束，数字获得了2017 Master of Pwn，膜拜各位大佬！！！！！！</p>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'http://localhost:4000/2017/03/18/2016-LCTF-easyeasy-200.html';
+     this.page.identifier = '/2017/03/18/2016 LCTF - easyeasy-200';
+     this.page.title = '2016 LCTF - easyeasy-200';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//wnagzihxa1n-github-io.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/01/22/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.22.html">
+            大土豆安全笔记 2021.01.22 在线求团购*OS Internals III
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/15/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.15.html">
+            大土豆安全笔记 2021.01.15 您已本分
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2021/01/08/%E5%A4%A7%E5%9C%9F%E8%B1%86%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0-2021.01.08.html">
+            大土豆安全笔记 2021.01.08 我，零基础，学iOS macOS安全
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/android_application_security/" class="set-1">android_application_security</a> <a href="/tag/android_ctf/" class="set-3">android_ctf</a> <a href="/tag/browser_security/" class="set-4">browser_security</a> <a href="/tag/security_daily/" class="set-5">security_daily</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = '';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+if (theme === "light") {
+    document.documentElement.setAttribute('data-theme', 'light');
+} else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+if (theme === "dark") {
+    activateDarkTheme();
+} else if (theme === "light") {
+    activateLightTheme();
+} else if  (userPrefers === "light") {
+    activateDarkTheme();
+} else {
+    activateDarkTheme();
+}
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
