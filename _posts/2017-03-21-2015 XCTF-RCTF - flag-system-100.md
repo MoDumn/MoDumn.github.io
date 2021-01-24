@@ -2,7 +2,7 @@
 layout: post
 title:  "2015 XCTF-RCTF - flag-system-100"
 date:   2017-03-21 18:00:00 +520
-tags: Android_CTF
+tags: android_ctf
 ---
 
 2015XCTF福州站的第一道Mobile题，同时也是RCTF的题目，100分

@@ -2,7 +2,7 @@
 layout: post
 title:  "REDMI 5 Plus Second Space Password Bypass"
 date:   2020-06-10 18:00:00 +520
-tags: Android_Application_Security
+tags: android_application_security
 ---
 
 这个漏洞来自F-Secure实验室
