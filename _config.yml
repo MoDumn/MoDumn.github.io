@@ -1,47 +1,54 @@
-title: wnagzihxa1n's blog
+title: 大土豆的菜栏
 author: wnagzihxa1n
 email: wnagzihxa1n@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
-  I am wnagzihxa1n, an unknown iOS/Android security researcher, this blog is my security study notes, just share something interesting.
-show_excerpts: false # set to true to show excerpts on the homepage
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+show_excerpts: true # set to true to show excerpts on the homepage
 
-paginate: 20
-paginate_path: "/blog/page:num/"
-
-tag_permalink_style: pretty
-tag_page_layout: tag_page
-tag_page_dir: tag
-
-# jekyll-dash date format
+# Minima date format
 # refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
-dash:
+sass:
+  sass_dir: _sass
+plainwhite:
+  name: wnagzihxa1n
+  tagline: iOS/Android Security
   date_format: "%b %-d, %Y"
-
-  disqus:
-    shortname: wnagzihxa1n-github-io
+  sitemap: true # set to true to generate sitemap.xml content
 
   # generate social links in footer
-  # supported colors: green, red, orange, blue, cyan, pink, teal, yellow, indigo, purple
   social_links:
-    - url: https://twitter.com/wnagzihxa1n
-      icon: twitter-square
-      color: cyan
-    - url: https://github.com/wnagzihxa1n
-      icon: github-square
-      color: purple
+    twitter: wnagzihxa1n
+    github:  wnagzihxa1n
+    linkedIn: in/zhixian-wang-612908174/
+    rss: rss
+    # dribbble: jekyll
+    # flickr:   jekyll
+    # instagram: jekyll
+    # pinterest: jekyll
+    # youtube: jekyll
+    # facebook: jekyll
 
-  show_author: true
+    # Mastodon instances
+    # mastodon:
+    # - username: jekyll
+    #   instance: example.com
+    # - username: jekyll2
+    #   instance: example.com
 
-  animation_speed: 50
+# If you want to link only specific pages in your header, uncomment
+# this and add the path to the pages in order as they should show up
+header_pages:
+  about.md
 
 # Build settings
-theme: jekyll-dash
+theme: plainwhite
 
 plugins:
- - jekyll/tagging
- - jekyll-feed
- - jekyll-seo-tag
- - jekyll-paginate
- - liquid-md5
+  - jekyll-seo-tag
+  # - jekyll-feed
 
-
+name: wnagzihxa1n
+description: 大土豆的菜栏
+url: https://wnagzihxa1n.vip

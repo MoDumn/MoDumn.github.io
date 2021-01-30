@@ -2,7 +2,7 @@
 layout: post
 title:  "2017 XCTF&NJCTF - LittleRotatorGame-200"
 date:   2017-03-16 18:00:00 +520
-tags: android_ctf
+categories: Android_CTF
 ---
 
 2017XCTF南京站线上赛同时也是NJCTF的Mobile题，一度做的我怀疑人生，题目可以在XCTF OJ上面找到

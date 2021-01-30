@@ -2,7 +2,7 @@
 layout: post
 title:  "2014 NAGA&PIOWIND APP应用攻防竞赛 - crackme.l1.sign"
 date:   2017-09-04 18:00:00 +520
-tags: android_ctf
+categories: Android_CTF
 ---
 
 Java层用于传字符串，输入用户名和密码到Native层校验
