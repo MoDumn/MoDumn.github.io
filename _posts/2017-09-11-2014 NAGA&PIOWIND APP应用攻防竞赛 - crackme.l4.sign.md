@@ -10,7 +10,7 @@ Java层比较简单
 ![1.png](/assets/resources/729F23F05581B500ECBA2FF1F882D514.png)
 
 查看so，发现加密，依旧dump，IDA调试时未发现有反调试，不过有那么一瞬间看到了`inotify`，没具体看
-```
+```c
 auto fp, dex_addr, end_addr;  
 fp = fopen("E:\\libcrackme.so", "wb");  
 for(dex_addr = 0xA357D000; dex_addr < 0xA35DE000; dex_addr++)
