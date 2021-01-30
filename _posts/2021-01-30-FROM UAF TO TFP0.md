@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "CVE-2019-8605 FROM UAF TO TFP0"
-date:   2021-01-29 18:00:00 +520
-tags: ios_security
+date:   2021-01-30 18:00:00 +520
+categories: iOS_Security
 ---
 
 这篇文章的开始是我看了Ned Williamson的一个漏洞
