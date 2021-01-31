@@ -42,6 +42,15 @@ plainwhite:
 header_pages:
   about.md
 
+header:
+  pages:
+    - name: Home
+      slug: /
+    - name: iOS_Security
+      slug: /ios_security
+    - name: Security_Daily
+      slug: /security_daily
+
 # Build settings
 theme: plainwhite
 
