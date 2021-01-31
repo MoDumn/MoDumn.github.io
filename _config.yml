@@ -46,10 +46,16 @@ header:
   pages:
     - name: Home
       slug: /
-    - name: iOS_Security
-      slug: /ios_security
-    - name: Security_Daily
+    - name: Security Daily
       slug: /security_daily
+    - name: iOS Security
+      slug: /ios_security
+    - name: Android Security
+      slug: android_security
+    - name: Android CTF
+      slug: android_ctf
+    - name: Browser Security
+      slug: browser_security
 
 # Build settings
 theme: plainwhite
