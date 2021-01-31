@@ -52,7 +52,7 @@ header:
       slug: /ios_security
     - name: Android Security
       slug: android_security
-    - name: Android CTF
+    - name: CTF
       slug: android_ctf
     - name: Browser Security
       slug: browser_security
