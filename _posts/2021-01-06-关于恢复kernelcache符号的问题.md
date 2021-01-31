@@ -5,6 +5,8 @@ date:   2021-01-06 18:00:00 +520
 categories: iOS_Security
 ---
 
+**PDF版本请点击[此处](https://github.com/wnagzihxa1n/iOS-macOS-Vul-Analysis-Articles/blob/main/%E5%85%B3%E4%BA%8E%E6%81%A2%E5%A4%8Dkernelcache%E7%AC%A6%E5%8F%B7%E7%9A%84%E9%97%AE%E9%A2%98.pdf)下载**
+
 太长不看版：流水账啥结论都没有
 
 作为一个初级iOS安全研究爱好者，我在近期的漏洞复现实践中遇到了一个问题，就是如何恢复符号
