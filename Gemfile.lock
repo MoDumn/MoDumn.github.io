@@ -73,6 +73,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (> 1.16)
   jekyll (~> 4.1.1)
+  jekyll-seo-tag
   plainwhite!
   rake (~> 12.0)
 
