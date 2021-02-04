@@ -45,11 +45,11 @@ header_pages:
 header:
   pages:
     - name: Home
-      slug: /
+      slug: index
     - name: Security Daily
-      slug: /security_daily
+      slug: security_daily
     - name: iOS
-      slug: /ios_security
+      slug: ios_security
     - name: Android
       slug: android_security
     - name: CTF
