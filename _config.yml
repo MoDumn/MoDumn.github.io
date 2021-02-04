@@ -56,6 +56,8 @@ header:
       slug: android_ctf
     - name: Browser
       slug: browser_security
+    - name: Friends
+      slug: friends
 
 # Build settings
 theme: plainwhite
