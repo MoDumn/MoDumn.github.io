@@ -2,6 +2,11 @@
 layout: default
 ---
 
+<style>
+    ul.friends_ul li.friends_li{ float:left; margin-left:20px; list-style-type:none;}
+    li a.friends_li_a {display: block; color: black; text-align: left; padding: 14px 16px; text-decoration: none;}
+</style>
+
 {%- if page.title -%}
 <h1 class="page-heading">{{ page.title }}</h1>
 {%- endif -%}
@@ -14,33 +19,11 @@ layout: default
 <ul class="posts">
     <li>
         <h1 id="posts-label">
-            Welcome to wnagzihxa1n's Blog
+            Here are my best friends
         </h1>
     </li>
 
-    {%- for post in site.posts -%}
-    <li>
-        {%- assign date_format = site.plainwhite.date_format | default: "%b %-d, %Y" -%}
-        <a class="post-link" href="{{ post.url | relative_url }}">
-            <h2 class="post-title">{{ post.title | escape }}</h2>
-        </a>
-        <div class="post-meta">
-            <ul class="post-categories">
-                {%- for tag in post.categories -%}
-                <li>{{ tag }}</li>
-                {%- endfor -%}
-            </ul>
-            <div class="post-date">
-                <i class="icon-calendar"></i>
-                {{ post.date | date: date_format }}</div>
-        </div>
-        <div class="post">
-            {%- if site.show_excerpts -%}
-            {{ post.excerpt }}
-            {%- endif -%}
-        </div>
-    </li>
-    {%- endfor -%}
+    <li><a class="friends_li_a" href="http://pcat.cc">Pcat：pcat.cc</a></li>
 </ul>
 
 <!-- <p class="feed-subscribe"><svg class="svg-icon orange">
