@@ -58,6 +58,8 @@ header:
       slug: browser_security
     - name: Friends
       slug: friends
+    - name: About
+      slug: about
 
 # Build settings
 theme: plainwhite
